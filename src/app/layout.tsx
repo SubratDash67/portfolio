@@ -1,28 +1,25 @@
 import type { Metadata } from "next";
-import { Geist_Mono } from "next/font/google";
-import { Instrument_Serif } from "next/font/google";
-import { Header, Footer } from "@/components/layout";
-import { ScrollProgress } from "@/components/ui";
+import { Oswald, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument-serif",
+const oswald = Oswald({
+  variable: "--font-oswald",
   subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "Subrat Dash — ML Systems Engineer",
-    template: "%s | Subrat Dash",
+    default: "SUBRAT DASH — ML SYSTEMS ENGINEER",
+    template: "%s | SUBRAT DASH",
   },
   description:
     "Engineering student building data-driven software systems with focus on machine learning pipelines, analytical backends, and deployment-aware design.",
@@ -40,13 +37,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "Subrat Dash Portfolio",
-    title: "Subrat Dash — ML Systems Engineer",
+    title: "SUBRAT DASH — ML SYSTEMS ENGINEER",
     description:
       "Engineering student building data-driven software systems with focus on machine learning pipelines, analytical backends, and deployment-aware design.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Subrat Dash — ML Systems Engineer",
+    title: "SUBRAT DASH — ML SYSTEMS ENGINEER",
     description:
       "Engineering student building data-driven software systems with focus on machine learning pipelines, analytical backends, and deployment-aware design.",
   },
@@ -63,16 +60,25 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
+      <head>
+        <style>{`
+          :root {
+            --font-display: ${oswald.style.fontFamily};
+            --font-mono: ${jetbrainsMono.style.fontFamily};
+          }
+        `}</style>
+      </head>
       <body
-        className={`${instrumentSerif.variable} ${geistMono.variable} antialiased bg-background text-text-secondary`}
+        className={`${oswald.variable} ${jetbrainsMono.variable} antialiased`}
+        style={{
+          fontFamily: "var(--font-mono)",
+        }}
       >
-        {/* Content */}
-        <div className="relative">
-          <ScrollProgress />
-          <Header />
-          <main>{children}</main>
-          <Footer />
-        </div>
+        {/* Noise Overlay */}
+        <div className="noise-overlay" aria-hidden="true" />
+        
+        {/* Main Content */}
+        {children}
       </body>
     </html>
   );
