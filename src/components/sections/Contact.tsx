@@ -33,7 +33,7 @@ export function Contact() {
   ];
 
   return (
-    <Section id="contact" className="py-24 md:py-32 border-t border-border">
+    <Section id="contact" className="py-32 md:py-40 border-t border-border">
       <Container>
         <div ref={ref}>
           {/* Section Header */}
@@ -41,15 +41,15 @@ export function Contact() {
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="mb-16"
+            className="mb-20"
           >
             <span className="font-mono text-xs uppercase tracking-[0.2em] text-text-muted block mb-4">
               Connect
             </span>
-            <h2 className="font-serif italic text-4xl md:text-5xl lg:text-6xl text-text-primary mb-6">
+            <h2 className="font-serif italic text-4xl md:text-5xl lg:text-6xl text-text-primary mb-8">
               Get in Touch
             </h2>
-            <p className="font-mono text-sm text-text-secondary max-w-xl">
+            <p className="font-mono text-sm text-text-secondary max-w-xl leading-relaxed">
               Open to opportunities in ML systems engineering, backend development, 
               and data-driven product work. Let&apos;s build something together.
             </p>
@@ -107,12 +107,12 @@ export function Contact() {
               </div>
             </motion.div>
 
-            {/* Sidebar Info */}
+            {/* Sidebar Info - Hide vertical border on mobile */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.3, delay: 0.2 }}
-              className="lg:col-span-5 lg:border-l lg:border-border lg:pl-8"
+              className="lg:col-span-5 lg:border-l lg:border-border lg:pl-10"
             >
               {/* Availability */}
               <div className="border-t border-border pt-6 mb-8">

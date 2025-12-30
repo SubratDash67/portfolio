@@ -139,10 +139,20 @@ body {
   color: var(--text-secondary);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  line-height: var(--leading-relaxed);
+  line-height: 1.75;
   min-height: 100vh;
   overflow-x: hidden;
   letter-spacing: -0.01em;
+  cursor: crosshair;
+}
+
+/* Interactive elements get pointer */
+a, button, [role="button"], .list-row, .btn, .tag {
+  cursor: crosshair;
+}
+
+a:hover, button:hover, .list-row:hover, .btn:hover {
+  cursor: crosshair;
 }
 
 /* ===========================================
@@ -180,7 +190,7 @@ h3, h4, h5, h6 {
 
 p {
   font-family: var(--font-mono);
-  line-height: var(--leading-relaxed);
+  line-height: 1.75;
   font-size: var(--text-sm);
 }
 
@@ -226,15 +236,15 @@ code {
   grid-template-columns: 1fr auto auto;
   gap: 2rem;
   align-items: center;
-  padding: 1.5rem 0;
+  padding: 1.75rem 1.5rem;
   border-bottom: 1px solid var(--border);
-  transition: background-color 0ms, color 0ms;
-  cursor: pointer;
+  transition: none;
+  cursor: crosshair;
 }
 
 .list-row:hover {
-  background-color: var(--text-primary);
-  color: var(--background);
+  background-color: #ffffff;
+  color: #000000;
   margin-left: -1.5rem;
   margin-right: -1.5rem;
   padding-left: 1.5rem;
@@ -242,7 +252,8 @@ code {
 }
 
 .list-row:hover * {
-  color: var(--background) !important;
+  color: #000000 !important;
+  transition: none;
 }
 
 /* ===========================================
@@ -429,6 +440,7 @@ code {
   .list-row {
     grid-template-columns: 1fr;
     gap: 0.75rem;
+    padding: 1.25rem 1rem;
   }
   
   .list-row:hover {
@@ -436,5 +448,16 @@ code {
     margin-right: -1rem;
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+  
+  /* Hide vertical borders on mobile, keep horizontal */
+  .mobile-no-border-left {
+    border-left: none !important;
+  }
+  
+  /* Smaller H1 on mobile with tight line-height */
+  h1 {
+    font-size: clamp(2.5rem, 12vw, 3.5rem) !important;
+    line-height: 0.95 !important;
   }
 }

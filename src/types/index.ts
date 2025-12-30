@@ -70,7 +70,7 @@ export interface Skills {
 // ===========================================
 
 export interface ProjectLinks {
-  repo: string;
+  repo?: string;
   demo?: string;
 }
 

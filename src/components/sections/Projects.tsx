@@ -13,7 +13,7 @@ export function Projects() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <Section id="projects" className="py-24 md:py-32">
+    <Section id="projects" className="py-32 md:py-40">
       <Container>
         <div ref={ref}>
           {/* Section Header */}
@@ -21,7 +21,7 @@ export function Projects() {
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="mb-16"
+            className="mb-20"
           >
             {/* Section Label */}
             <span className="font-mono text-xs uppercase tracking-[0.2em] text-text-muted block mb-4">
@@ -29,11 +29,11 @@ export function Projects() {
             </span>
             
             {/* Section Title - Italic Serif */}
-            <h2 className="font-serif italic text-4xl md:text-5xl lg:text-6xl text-text-primary mb-6">
+            <h2 className="font-serif italic text-4xl md:text-5xl lg:text-6xl text-text-primary mb-8">
               Projects
             </h2>
             
-            <p className="font-mono text-sm text-text-muted max-w-xl">
+            <p className="font-mono text-sm text-text-muted max-w-xl leading-relaxed">
               End-to-end systems emphasizing problem formulation, evaluation
               rigor, and engineering trade-offs.
             </p>
@@ -52,15 +52,15 @@ export function Projects() {
                   <div className="list-row group">
                     {/* Project Info */}
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-baseline gap-4 mb-2">
-                        <span className="font-mono text-xs text-text-muted">
+                      <div className="flex items-baseline gap-4 md:gap-6 mb-2">
+                        <span className="font-mono text-xs text-text-muted flex-shrink-0 w-6">
                           {String(index + 1).padStart(2, "0")}
                         </span>
-                        <h3 className="font-serif text-xl md:text-2xl text-text-primary group-hover:text-background transition-none">
+                        <h3 className="font-serif text-lg md:text-2xl text-text-primary group-hover:text-background transition-none">
                           {project.title}
                         </h3>
                       </div>
-                      <p className="font-mono text-xs text-text-muted group-hover:text-background/70 ml-8 md:ml-10 max-w-xl">
+                      <p className="font-mono text-xs text-text-muted group-hover:text-background/70 ml-10 md:ml-12 max-w-xl leading-relaxed">
                         {project.one_liner}
                       </p>
                     </div>

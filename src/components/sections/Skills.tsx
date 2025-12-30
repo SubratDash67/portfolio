@@ -12,7 +12,7 @@ export function Skills() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <Section id="skills" className="py-24 md:py-32 border-t border-border">
+    <Section id="skills" className="py-32 md:py-40 border-t border-border">
       <Container>
         <div ref={ref}>
           {/* Section Header */}
@@ -20,15 +20,15 @@ export function Skills() {
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="mb-16"
+            className="mb-20"
           >
             <span className="font-mono text-xs uppercase tracking-[0.2em] text-text-muted block mb-4">
               Technical Expertise
             </span>
-            <h2 className="font-serif italic text-4xl md:text-5xl lg:text-6xl text-text-primary mb-6">
+            <h2 className="font-serif italic text-4xl md:text-5xl lg:text-6xl text-text-primary mb-8">
               Skills
             </h2>
-            <p className="font-mono text-sm text-text-muted max-w-xl">
+            <p className="font-mono text-sm text-text-muted max-w-xl leading-relaxed">
               Evidence-based capabilities demonstrated through projects and production systems.
             </p>
           </motion.div>

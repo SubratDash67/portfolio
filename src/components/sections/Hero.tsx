@@ -71,9 +71,9 @@ export function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.5 }}
-              className="flex flex-wrap gap-4"
+              className="flex flex-wrap gap-6"
             >
-              <a href="#projects" className="btn">
+              <a href="#projects" className="btn px-6 py-3">
                 View Projects
                 <span className="text-accent">↓</span>
               </a>
@@ -81,10 +81,10 @@ export function Hero() {
                 href={identity.contact.resume_pdf}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-accent"
+                className="group inline-flex items-center gap-3 px-8 py-4 border-2 border-text-primary/30 font-mono text-xs uppercase tracking-[0.1em] text-text-primary hover:bg-text-primary hover:text-background transition-none"
               >
-                Download CV
-                <span>↗</span>
+                <span>Download CV</span>
+                <span className="group-hover:translate-x-1 transition-transform">↗</span>
               </a>
             </motion.div>
           </div>

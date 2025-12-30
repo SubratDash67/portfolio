@@ -149,7 +149,7 @@ export function ProjectCard({ project, index, size = "default" }: ProjectCardPro
               <div className="flex gap-3">
                 {project.links.repo && (
                   <button
-                    onClick={(e) => handleExternalLink(project.links.repo, e)}
+                    onClick={(e) => handleExternalLink(project.links.repo!, e)}
                     className="text-text-muted hover:text-accent transition-colors p-1"
                     aria-label="View repository"
                   >
