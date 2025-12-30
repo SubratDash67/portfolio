@@ -138,9 +138,9 @@ function TerminalBox({
         className="output space-y-1"
       >
         {items.map((item, i) => (
-          <div key={item} className="flex items-center gap-2">
-            <span className="text-terminal-green/50">→</span>
-            <span className="text-terminal-green">{item}</span>
+          <div key={item} className="flex items-start gap-2">
+            <span className="text-terminal-green/50 shrink-0">→</span>
+            <span className="text-terminal-green break-words">{item}</span>
           </div>
         ))}
       </motion.div>

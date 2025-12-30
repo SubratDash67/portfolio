@@ -8,9 +8,9 @@ export function HeroBrutalist() {
   const nameParts = identity.full_name.toUpperCase().split(" ");
 
   return (
-    <section id="hero" className="section min-h-screen flex flex-col justify-center relative overflow-hidden">
-      {/* Grid Reference Lines (Decorative) */}
-      <div className="absolute inset-0 pointer-events-none">
+    <section id="hero" className="section min-h-[80vh] md:min-h-screen flex flex-col justify-center relative overflow-hidden pt-8 md:pt-0">
+      {/* Grid Reference Lines (Decorative) - Desktop Only */}
+      <div className="absolute inset-0 pointer-events-none hidden md:block">
         <div className="absolute left-1/4 top-0 bottom-0 w-px bg-border opacity-30" />
         <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border opacity-30" />
         <div className="absolute left-3/4 top-0 bottom-0 w-px bg-border opacity-30" />
@@ -36,7 +36,7 @@ export function HeroBrutalist() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="font-display text-[clamp(4rem,18vw,14rem)] leading-[0.85] tracking-[-0.03em] text-text-primary mb-4"
+          className="font-display text-[clamp(3rem,15vw,14rem)] leading-[0.85] tracking-[-0.03em] text-text-primary mb-4"
         >
           {nameParts[0]}
           <br />
