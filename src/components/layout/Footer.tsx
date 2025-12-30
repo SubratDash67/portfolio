@@ -1,65 +1,53 @@
+"use client";
+
 import Link from "next/link";
-import { portfolioData, socialNavItems } from "@/data";
+import { motion } from "framer-motion";
+import { portfolioData, socialNavItems, mainNavItems } from "@/data";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
   const { identity } = portfolioData;
 
   return (
-    <footer className="border-t border-border bg-background" role="contentinfo">
+    <footer className="relative border-t border-border" role="contentinfo">
       <div className="w-full max-w-(--max-width-content) mx-auto px-6 md:px-8 lg:px-12">
-        <div className="py-12 md:py-16">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {/* Branding */}
-            <div>
-              <Link
-                href="/"
-                className="text-text-primary font-semibold text-xl tracking-tight hover:opacity-80 transition-opacity inline-block mb-4"
-                aria-label="Home"
-              >
-                {identity.preferred_name} {identity.full_name.split(" ")[1]}
-              </Link>
-              <p className="text-text-muted text-sm max-w-xs">
-                {identity.headline}
-              </p>
-            </div>
-
-            {/* Quick Links */}
-            <div>
-              <h3 className="text-text-primary font-medium text-sm mb-4 uppercase tracking-wide">
-                Navigation
+        {/* Main Footer Content */}
+        <div className="py-16 md:py-24">
+          {/* Grid Layout */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 mb-16 md:mb-24">
+            {/* Navigation */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3 }}
+              className="md:col-span-3"
+            >
+              <h3 className="font-mono text-xs uppercase tracking-[0.15em] text-accent mb-6">
+                Navigate
               </h3>
               <nav className="space-y-3" aria-label="Footer navigation">
-                <a
-                  href="#about"
-                  className="block text-text-secondary hover:text-text-primary transition-colors text-sm"
-                >
-                  About
-                </a>
-                <a
-                  href="#projects"
-                  className="block text-text-secondary hover:text-text-primary transition-colors text-sm"
-                >
-                  Projects
-                </a>
-                <a
-                  href="#skills"
-                  className="block text-text-secondary hover:text-text-primary transition-colors text-sm"
-                >
-                  Skills
-                </a>
-                <a
-                  href="#contact"
-                  className="block text-text-secondary hover:text-text-primary transition-colors text-sm"
-                >
-                  Contact
-                </a>
+                {mainNavItems.map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    className="block font-mono text-sm text-text-muted hover:text-text-primary transition-colors"
+                  >
+                    {item.label}
+                  </a>
+                ))}
               </nav>
-            </div>
+            </motion.div>
 
             {/* Connect */}
-            <div>
-              <h3 className="text-text-primary font-medium text-sm mb-4 uppercase tracking-wide">
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+              className="md:col-span-3"
+            >
+              <h3 className="font-mono text-xs uppercase tracking-[0.15em] text-accent mb-6">
                 Connect
               </h3>
               <div className="space-y-3">
@@ -69,34 +57,115 @@ export function Footer() {
                     href={item.href}
                     target={item.isExternal ? "_blank" : undefined}
                     rel={item.isExternal ? "noopener noreferrer" : undefined}
-                    className="block text-text-secondary hover:text-text-primary transition-colors text-sm"
+                    className="block font-mono text-sm text-text-muted hover:text-text-primary transition-colors"
                   >
                     {item.label}
                   </a>
                 ))}
-                <a
-                  href={identity.contact.resume_pdf}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block text-text-secondary hover:text-text-primary transition-colors text-sm"
-                >
-                  Resume
-                </a>
               </div>
-            </div>
+            </motion.div>
+
+            {/* Status */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: 0.2 }}
+              className="md:col-span-3"
+            >
+              <h3 className="font-mono text-xs uppercase tracking-[0.15em] text-accent mb-6">
+                Status
+              </h3>
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 bg-green-500" />
+                  <span className="font-mono text-sm text-text-muted">
+                    Available
+                  </span>
+                </div>
+                <p className="font-mono text-sm text-text-muted">
+                  {identity.location.city}, {identity.location.country}
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Contact */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: 0.3 }}
+              className="md:col-span-3"
+            >
+              <h3 className="font-mono text-xs uppercase tracking-[0.15em] text-accent mb-6">
+                Direct
+              </h3>
+              <a
+                href={`mailto:${identity.contact.email}`}
+                className="font-mono text-sm text-text-muted hover:text-text-primary transition-colors block break-all"
+              >
+                {identity.contact.email}
+              </a>
+            </motion.div>
           </div>
+
+          {/* Signature / Stamp Block */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.3, delay: 0.2 }}
+            className="border-t border-border pt-16 md:pt-24"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+              {/* Large Signature Name */}
+              <div className="lg:col-span-8">
+                <motion.h2
+                  className="font-serif text-[clamp(3rem,10vw,7rem)] leading-[0.85] tracking-tight text-text-primary"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: 0.3 }}
+                >
+                  {identity.preferred_name}
+                </motion.h2>
+                <p className="font-mono text-sm text-text-muted mt-4 max-w-md">
+                  {identity.headline}
+                </p>
+              </div>
+
+              {/* Stamp */}
+              <motion.div
+                className="lg:col-span-4 lg:text-right"
+                initial={{ opacity: 0, rotate: -3 }}
+                whileInView={{ opacity: 1, rotate: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.4 }}
+              >
+                <div className="inline-block border-2 border-accent p-4 md:p-6 transform rotate-[-2deg]">
+                  <div className="font-mono text-[10px] md:text-xs uppercase tracking-[0.25em] text-accent mb-1">
+                    Engineered With Care
+                  </div>
+                  <div className="font-serif text-xl md:text-2xl text-text-primary">
+                    {currentYear}
+                  </div>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.15em] text-text-muted mt-2">
+                    Version 3.0
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
         </div>
 
         {/* Bottom Bar */}
         <div className="py-6 border-t border-border">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-text-muted text-sm">
-              © {currentYear} {identity.full_name}. Built with Next.js and
-              Tailwind CSS.
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="font-mono text-xs text-text-muted">
+              © {currentYear} {identity.full_name}. All rights reserved.
             </p>
-            <p className="text-text-muted text-sm">
-              {identity.location.city}, {identity.location.country}
-              {identity.location.remote_open && " • Open to remote work"}
+            <p className="font-mono text-xs text-text-muted">
+              Built with precision using Next.js & Tailwind
             </p>
           </div>
         </div>

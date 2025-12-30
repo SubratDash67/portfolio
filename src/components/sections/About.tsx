@@ -6,191 +6,142 @@ import { useRef } from "react";
 import { portfolioData } from "@/data";
 import { Container, Section } from "@/components/layout";
 
-const fadeInUpVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: [0.6, 0.05, 0.01, 0.9] as const,
-    },
-  },
-};
-
 export function About() {
   const { summary, about, education } = portfolioData;
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <Section id="about" className="py-20 md:py-28">
-      <Container size="default">
-        <div ref={ref} className="max-w-4xl mx-auto">
+    <Section id="about" className="py-24 md:py-32 border-t border-border">
+      <Container>
+        <div ref={ref}>
           {/* Section Header */}
           <motion.div
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            variants={fadeInUpVariants}
-            className="mb-12"
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="mb-16"
           >
-            <h2 className="text-2xl md:text-3xl font-semibold text-text-primary tracking-tight">
+            <span className="font-mono text-xs uppercase tracking-[0.2em] text-text-muted block mb-4">
+              Background
+            </span>
+            <h2 className="font-serif italic text-4xl md:text-5xl lg:text-6xl text-text-primary">
               About
             </h2>
           </motion.div>
 
-          {/* Professional Summary */}
-          <motion.div
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            variants={{
-              ...fadeInUpVariants,
-              visible: {
-                ...fadeInUpVariants.visible,
-                transition: { ...fadeInUpVariants.visible.transition, delay: 0.1 },
-              },
-            }}
-            className="mb-20"
-          >
-            <h3 className="text-lg font-medium text-text-primary mb-4">
-              Overview
-            </h3>
-            <p className="text-base text-text-secondary leading-relaxed mb-8">
-              {summary.short}
-            </p>
-
-            {/* Focus Areas */}
-            <div className="space-y-4">
-              <h4 className="text-xs font-medium text-text-tertiary uppercase tracking-widest mb-4">
-                Focus Areas
-              </h4>
-              <ul className="space-y-3">
-                {summary.focus_areas.map((area, index) => (
-                  <motion.li
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                    transition={{ delay: 0.2 + index * 0.1, duration: 0.5 }}
-                    className="flex items-start gap-3 text-text-secondary"
-                  >
-                    <span className="text-text-muted mt-1.5 shrink-0">→</span>
-                    <span>{area}</span>
-                  </motion.li>
-                ))}
-              </ul>
-            </div>
-          </motion.div>
-
-          {/* Technical Philosophy */}
-          <motion.div
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            variants={{
-              ...fadeInUpVariants,
-              visible: {
-                ...fadeInUpVariants.visible,
-                transition: { ...fadeInUpVariants.visible.transition, delay: 0.3 },
-              },
-            }}
-            className="mb-20 p-6 md:p-8 bg-surface rounded-lg"
-          >
-            <h3 className="text-lg font-medium text-text-primary mb-4">
-              Technical Philosophy
-            </h3>
-            <p className="text-text-secondary leading-relaxed mb-6">
-              {about.technical_philosophy}
-            </p>
-
-            {/* Learning Style */}
-            <div className="space-y-3">
-              <h4 className="text-xs font-medium text-text-tertiary uppercase tracking-widest">
-                Learning Approach
-              </h4>
-              <ul className="space-y-2">
-                {about.learning_style.map((item, index) => (
-                  <li
-                    key={index}
-                    className="flex items-start gap-3 text-sm text-text-secondary"
-                  >
-                    <span className="text-text-muted mt-0.5">•</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </motion.div>
-
-          {/* Education */}
-          <motion.div
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            variants={{
-              ...fadeInUpVariants,
-              visible: {
-                ...fadeInUpVariants.visible,
-                transition: { ...fadeInUpVariants.visible.transition, delay: 0.4 },
-              },
-            }}
-          >
-            <h3 className="text-lg font-medium text-text-primary mb-6">
-              Education
-            </h3>
-            {education.map((edu, index) => (
-              <div
-                key={index}
-                className="border-l-2 border-border pl-6 pb-8 last:pb-0"
-              >
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-3">
-                  <div>
-                    <h4 className="text-base font-medium text-text-primary">
-                      {edu.degree}
-                    </h4>
-                    <p className="text-text-secondary">{edu.field}</p>
-                  </div>
-                  <span className="text-sm text-text-tertiary whitespace-nowrap">
-                    {edu.start_year} — {edu.end_year}
-                  </span>
-                </div>
-                <p className="text-text-secondary mb-2">
-                  {edu.institution}, {edu.location}
-                </p>
-                <p className="text-sm text-text-muted">
-                  CGPA: <span className="text-text-primary font-medium">{edu.cgpa}</span>
+          {/* Two Column Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+            {/* Main Content */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+              className="lg:col-span-7"
+            >
+              {/* Overview */}
+              <div className="border-t border-border pt-6 mb-12">
+                <h3 className="font-mono text-xs uppercase tracking-[0.15em] text-accent mb-4">
+                  Overview
+                </h3>
+                <p className="font-mono text-sm text-text-secondary leading-relaxed">
+                  {summary.short}
                 </p>
               </div>
-            ))}
-          </motion.div>
 
-          {/* Outside Interests */}
-          {about.outside_interests.length > 0 && (
-            <motion.div
-              initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-              variants={{
-                ...fadeInUpVariants,
-                visible: {
-                  ...fadeInUpVariants.visible,
-                  transition: { ...fadeInUpVariants.visible.transition, delay: 0.5 },
-                },
-              }}
-              className="mt-16 pt-8 border-t border-border-subtle"
-            >
-              <h4 className="text-xs font-medium text-text-tertiary uppercase tracking-widest mb-4">
-                Beyond Code
-              </h4>
-              <ul className="space-y-2">
-                {about.outside_interests.map((interest, index) => (
-                  <li
-                    key={index}
-                    className="flex items-start gap-3 text-text-secondary"
-                  >
-                    <span className="text-text-muted mt-0.5">•</span>
-                    <span>{interest}</span>
-                  </li>
-                ))}
-              </ul>
+              {/* Technical Philosophy */}
+              <div className="border-t border-border pt-6 mb-12">
+                <h3 className="font-mono text-xs uppercase tracking-[0.15em] text-accent mb-4">
+                  Technical Philosophy
+                </h3>
+                <p className="font-mono text-sm text-text-secondary leading-relaxed mb-6">
+                  {about.technical_philosophy}
+                </p>
+                
+                <h4 className="font-mono text-xs uppercase tracking-[0.1em] text-text-muted mb-3">
+                  Learning Approach
+                </h4>
+                <ul className="space-y-2">
+                  {about.learning_style.map((item, index) => (
+                    <li key={index} className="font-mono text-xs text-text-muted">
+                      — {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Focus Areas */}
+              <div className="border-t border-border pt-6">
+                <h3 className="font-mono text-xs uppercase tracking-[0.15em] text-accent mb-4">
+                  Focus Areas
+                </h3>
+                <div className="space-y-3">
+                  {summary.focus_areas.map((area, index) => (
+                    <div key={index} className="flex items-start gap-4">
+                      <span className="font-mono text-xs text-text-muted">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <p className="font-mono text-sm text-text-secondary">
+                        {area}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </motion.div>
-          )}
+
+            {/* Sidebar */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.3, delay: 0.2 }}
+              className="lg:col-span-5 lg:border-l lg:border-border lg:pl-8"
+            >
+              {/* Education */}
+              <div className="border-t border-border pt-6 mb-12">
+                <h3 className="font-mono text-xs uppercase tracking-[0.15em] text-accent mb-6">
+                  Education
+                </h3>
+                {education.map((edu, index) => (
+                  <div key={index} className="mb-6 pb-6 border-b border-border last:border-b-0 last:pb-0">
+                    <div className="flex items-start justify-between gap-4 mb-2">
+                      <h4 className="font-mono text-sm text-text-primary">
+                        {edu.degree}
+                      </h4>
+                      <span className="font-mono text-xs text-text-muted shrink-0">
+                        {edu.start_year}—{edu.end_year}
+                      </span>
+                    </div>
+                    <p className="font-mono text-xs text-text-muted mb-1">
+                      {edu.field}
+                    </p>
+                    <p className="font-mono text-xs text-text-muted mb-2">
+                      {edu.institution}, {edu.location}
+                    </p>
+                    <p className="font-mono text-xs text-text-primary">
+                      CGPA: {edu.cgpa}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Outside Interests */}
+              {about.outside_interests.length > 0 && (
+                <div className="border-t border-border pt-6">
+                  <h3 className="font-mono text-xs uppercase tracking-[0.15em] text-accent mb-4">
+                    Beyond Code
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {about.outside_interests.map((interest, index) => (
+                      <span key={index} className="tag">
+                        {interest}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          </div>
         </div>
       </Container>
     </Section>

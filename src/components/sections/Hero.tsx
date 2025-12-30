@@ -2,138 +2,159 @@
 
 import { motion } from "framer-motion";
 import { portfolioData } from "@/data";
-import { Container } from "@/components/layout";
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: [0.6, 0.05, 0.01, 0.9] as const,
-    },
-  },
-};
+import { Container, Section } from "@/components/layout";
 
 export function Hero() {
-  const { identity } = portfolioData;
+  const { identity, summary } = portfolioData;
 
   return (
-    <section className="min-h-[calc(100vh-5rem)] flex items-center py-24 md:py-32 lg:py-40">
+    <Section id="hero" className="min-h-screen flex items-center pt-14">
       <Container>
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="max-w-4xl"
-        >
-          {/* Greeting */}
-          <motion.p
-            variants={itemVariants}
-            className="text-text-tertiary text-xs md:text-sm mb-6 tracking-widest uppercase"
-          >
-            Hi, I&apos;m {identity.preferred_name}
-          </motion.p>
-
-          {/* Name */}
-          <motion.h1
-            variants={itemVariants}
-            className="text-5xl md:text-6xl lg:text-7xl font-bold text-text-primary mb-6 leading-none tracking-tighter"
-          >
-            {identity.full_name}
-          </motion.h1>
-
-          {/* Headline */}
-          <motion.p
-            variants={itemVariants}
-            className="text-lg md:text-xl lg:text-2xl text-text-secondary mb-10 leading-relaxed max-w-2xl"
-          >
-            {identity.headline}
-          </motion.p>
-
-          {/* Roles */}
-          <motion.div
-            variants={itemVariants}
-            className="flex flex-wrap gap-3 mb-12"
-          >
-            {identity.roles.map((role) => (
-              <span
-                key={role}
-                className="px-4 py-2 bg-surface rounded-lg text-sm text-text-muted"
-              >
-                {role}
+        {/* Grid Structure */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+          {/* Left Column - Main Content */}
+          <div className="lg:col-span-8">
+            {/* Section Label */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+              className="mb-8"
+            >
+              <span className="font-mono text-xs uppercase tracking-[0.2em] text-text-muted">
+                Portfolio / 2025
               </span>
-            ))}
-          </motion.div>
+            </motion.div>
 
-          {/* CTA Buttons */}
+            {/* Main Heading - Huge Serif */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.1 }}
+              className="font-serif text-[clamp(3rem,12vw,8rem)] leading-[0.9] tracking-[-0.03em] text-text-primary mb-8"
+            >
+              {identity.full_name.split(" ")[0]}
+              <br />
+              <span className="text-text-muted">{identity.full_name.split(" ")[1]}</span>
+            </motion.h1>
+
+            {/* Subheading - Italic Serif */}
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+              className="font-serif italic text-2xl md:text-3xl lg:text-4xl text-text-secondary mb-12"
+            >
+              {identity.headline}
+            </motion.h2>
+
+            {/* Divider Line */}
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+              className="h-px bg-border mb-8 origin-left"
+            />
+
+            {/* Description */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.4 }}
+              className="font-mono text-sm text-text-secondary max-w-xl leading-relaxed mb-12"
+            >
+              {summary.short}
+            </motion.p>
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.5 }}
+              className="flex flex-wrap gap-4"
+            >
+              <a href="#projects" className="btn">
+                View Projects
+                <span className="text-accent">↓</span>
+              </a>
+              <a
+                href={identity.contact.resume_pdf}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-accent"
+              >
+                Download CV
+                <span>↗</span>
+              </a>
+            </motion.div>
+          </div>
+
+          {/* Right Column - Meta Info */}
           <motion.div
-            variants={itemVariants}
-            className="flex flex-wrap gap-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.3 }}
+            className="lg:col-span-4 lg:border-l lg:border-border lg:pl-8"
           >
-            <a
-              href="#projects"
-              className="px-6 py-3 bg-accent font-medium rounded-lg hover:bg-accent-hover transition-colors duration-200"
-              style={{ color: '#09090B' }}
-            >
-              View Projects
-            </a>
-            <a
-              href="#contact"
-              className="px-6 py-3 bg-surface text-text-primary font-medium rounded-lg hover:bg-surface-elevated transition-colors duration-200"
-            >
-              Get in Touch
-            </a>
-            <a
-              href={identity.contact.resume_pdf}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-3 text-text-muted font-medium rounded-lg hover:text-text-primary hover:bg-surface transition-all duration-200"
-            >
-              Resume ↗
-            </a>
-          </motion.div>
+            <div className="space-y-8">
+              {/* Status */}
+              <div>
+                <h3 className="font-mono text-xs uppercase tracking-[0.15em] text-text-muted mb-3">
+                  Status
+                </h3>
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 bg-success" />
+                  <span className="font-mono text-sm text-text-primary">
+                    Available for Work
+                  </span>
+                </div>
+              </div>
 
-          {/* Location */}
-          <motion.p
-            variants={itemVariants}
-            className="mt-20 text-text-tertiary text-sm flex items-center gap-2"
-          >
-            <svg
-              width="16"
-              height="16"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              viewBox="0 0 24 24"
-            >
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-              <circle cx="12" cy="10" r="3" />
-            </svg>
-            {identity.location.city}, {identity.location.country}
-            {identity.location.remote_open && (
-              <>
-                <span className="text-text-tertiary">•</span>
-                <span>Open to remote work</span>
-              </>
-            )}
-          </motion.p>
-        </motion.div>
+              {/* Location */}
+              <div>
+                <h3 className="font-mono text-xs uppercase tracking-[0.15em] text-text-muted mb-3">
+                  Location
+                </h3>
+                <p className="font-mono text-sm text-text-primary">
+                  {identity.location.city}, {identity.location.country}
+                </p>
+                {identity.location.remote_open && (
+                  <p className="font-mono text-xs text-text-muted mt-1">
+                    Open to Remote
+                  </p>
+                )}
+              </div>
+
+              {/* Focus Areas */}
+              <div>
+                <h3 className="font-mono text-xs uppercase tracking-[0.15em] text-text-muted mb-3">
+                  Focus Areas
+                </h3>
+                <ul className="space-y-2">
+                  {summary.focus_areas.slice(0, 3).map((area, index) => (
+                    <li key={index} className="font-mono text-xs text-text-secondary">
+                      {area}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Contact */}
+              <div>
+                <h3 className="font-mono text-xs uppercase tracking-[0.15em] text-text-muted mb-3">
+                  Contact
+                </h3>
+                <a
+                  href={`mailto:${identity.contact.email}`}
+                  className="font-mono text-sm text-text-primary hover:text-accent transition-colors"
+                >
+                  {identity.contact.email}
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </Container>
-    </section>
+    </Section>
   );
 }

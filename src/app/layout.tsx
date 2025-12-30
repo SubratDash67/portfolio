@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
+import { Instrument_Serif } from "next/font/google";
 import { Header, Footer } from "@/components/layout";
 import { ScrollProgress } from "@/components/ui";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
   subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -61,12 +64,15 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-text-secondary`}
+        className={`${instrumentSerif.variable} ${geistMono.variable} antialiased bg-background text-text-secondary`}
       >
-        <ScrollProgress />
-        <Header />
-        <main className="pt-16 md:pt-20">{children}</main>
-        <Footer />
+        {/* Content */}
+        <div className="relative">
+          <ScrollProgress />
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

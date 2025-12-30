@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ===========================================
-   DESIGN TOKENS - Dark Mode Only
+   DESIGN TOKENS - Technical Blueprint / Swiss Engineering
    =========================================== */
 
 html {
@@ -9,49 +9,53 @@ html {
 }
 
 :root {
-  /* Background colors */
-  --background: #09090B;
-  --surface: #111113;
-  --surface-elevated: #18181B;
-  --surface-subtle: #0C0C0E;
+  /* Background colors - Warm Industrial */
+  --background: #111111;
+  --surface: #161616;
+  --surface-elevated: #1a1a1a;
+  --surface-subtle: #0d0d0d;
   
-  /* Border colors */
-  --border: #27272A;
-  --border-subtle: #1C1C1F;
+  /* Border colors - Visible grid lines */
+  --border: #2a2a2a;
+  --border-subtle: #1f1f1f;
+  --border-strong: #3a3a3a;
   
-  /* Text colors */
-  --text-primary: #FAFAFA;
-  --text-secondary: #A1A1AA;
-  --text-muted: #71717A;
-  --text-tertiary: #52525B;
+  /* Text colors - Off-white/Bone */
+  --text-primary: #E5E5E5;
+  --text-secondary: #B3B3B3;
+  --text-muted: #808080;
+  --text-tertiary: #666666;
   
-  /* Accent colors - Used sparingly for CTAs only */
-  --accent: #3B82F6;
-  --accent-hover: #60A5FA;
-  --accent-muted: rgba(59, 130, 246, 0.08);
+  /* Accent - International Orange (used sparingly) */
+  --accent: #FF4F00;
+  --accent-hover: #E64600;
+  --accent-muted: rgba(255, 79, 0, 0.1);
   
   /* Semantic colors */
-  --success: #4ADE80;
-  --error: #F87171;
+  --success: #22C55E;
+  --error: #DC2626;
   
-  /* Typography scale (rem based, 16px root) */
-  --text-xs: 0.75rem;      /* 12px */
-  --text-sm: 0.875rem;     /* 14px */
-  --text-base: 1rem;       /* 16px */
-  --text-lg: 1.125rem;     /* 18px */
-  --text-xl: 1.25rem;      /* 20px */
-  --text-2xl: 1.5rem;      /* 24px */
-  --text-3xl: 1.875rem;    /* 30px */
-  --text-4xl: 2.25rem;     /* 36px */
-  --text-5xl: 3rem;        /* 48px */
-  --text-6xl: 3.75rem;     /* 60px */
+  /* Typography scale */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+  --text-7xl: 4.5rem;
+  --text-8xl: 6rem;
+  --text-9xl: 8rem;
   
   /* Line heights */
-  --leading-tight: 1.2;
+  --leading-none: 1;
+  --leading-tight: 1.1;
   --leading-snug: 1.375;
   --leading-normal: 1.5;
   --leading-relaxed: 1.625;
-  --leading-loose: 1.75;
   
   /* Font weights */
   --font-normal: 400;
@@ -59,44 +63,40 @@ html {
   --font-semibold: 600;
   --font-bold: 700;
   
-  /* Spacing scale (4px base) */
+  /* Spacing scale */
   --space-0: 0;
-  --space-1: 0.25rem;      /* 4px */
-  --space-2: 0.5rem;       /* 8px */
-  --space-3: 0.75rem;      /* 12px */
-  --space-4: 1rem;         /* 16px */
-  --space-5: 1.25rem;      /* 20px */
-  --space-6: 1.5rem;       /* 24px */
-  --space-8: 2rem;         /* 32px */
-  --space-10: 2.5rem;      /* 40px */
-  --space-12: 3rem;        /* 48px */
-  --space-16: 4rem;        /* 64px */
-  --space-20: 5rem;        /* 80px */
-  --space-24: 6rem;        /* 96px */
-  --space-32: 8rem;        /* 128px */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
   
   /* Layout */
-  --max-width-content: 72rem;    /* 1152px */
-  --max-width-prose: 42rem;      /* 672px - optimal line length */
-  --max-width-narrow: 32rem;     /* 512px */
+  --max-width-content: 80rem;
+  --max-width-prose: 48rem;
+  --max-width-narrow: 32rem;
   
-  /* Border radius */
-  --radius-sm: 0.25rem;    /* 4px */
-  --radius-md: 0.5rem;     /* 8px */
-  --radius-lg: 0.75rem;    /* 12px */
-  --radius-xl: 1rem;       /* 16px */
+  /* Border radius - NONE for Swiss precision */
+  --radius-none: 0;
   
-  /* Transitions */
-  --transition-fast: 150ms ease;
-  --transition-base: 200ms ease;
-  --transition-slow: 300ms ease;
+  /* Transitions - Sharp, instant feel */
+  --transition-instant: 0ms;
+  --transition-fast: 100ms ease;
+  --transition-base: 150ms ease;
 }
 
 /* ===========================================
    TAILWIND v4 THEME CONFIGURATION
    =========================================== */
 
-/* stylelint-disable-next-line at-rule-no-unknown */
 @theme inline {
   /* Colors */
   --color-background: var(--background);
@@ -105,6 +105,7 @@ html {
   --color-surface-subtle: var(--surface-subtle);
   --color-border: var(--border);
   --color-border-subtle: var(--border-subtle);
+  --color-border-strong: var(--border-strong);
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-text-muted: var(--text-muted);
@@ -117,13 +118,14 @@ html {
   --color-white: #ffffff;
   --color-black: #000000;
   
-  /* Fonts */
-  --font-sans: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  /* Fonts - Editorial Mix */
+  --font-serif: var(--font-instrument-serif), "Playfair Display", Georgia, serif;
+  --font-mono: var(--font-geist-mono), "JetBrains Mono", ui-monospace, monospace;
+  --font-sans: system-ui, sans-serif;
 }
 
 /* ===========================================
-   BASE STYLES
+   BASE STYLES - Swiss Precision
    =========================================== */
 
 html {
@@ -135,59 +137,249 @@ html {
 body {
   background-color: var(--background);
   color: var(--text-secondary);
-  font-family: var(--font-sans);
-  font-size: var(--text-base);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
   line-height: var(--leading-relaxed);
   min-height: 100vh;
+  overflow-x: hidden;
+  letter-spacing: -0.01em;
 }
 
 /* ===========================================
-   TYPOGRAPHY DEFAULTS
+   TYPOGRAPHY - Editorial Serif + Mono
    =========================================== */
 
-h1, h2, h3, h4, h5, h6 {
+/* Serif Headings - Human, Authored feel */
+h1, h2 {
+  font-family: var(--font-serif);
   color: var(--text-primary);
-  font-weight: var(--font-semibold);
-  line-height: var(--leading-tight);
-  letter-spacing: -0.02em;
+  font-weight: var(--font-normal);
+  line-height: var(--leading-none);
+  letter-spacing: -0.03em;
 }
 
 h1 {
-  font-size: var(--text-5xl);
+  font-size: clamp(3.5rem, 10vw, var(--text-9xl));
 }
 
 h2 {
-  font-size: var(--text-3xl);
+  font-size: clamp(2rem, 5vw, var(--text-5xl));
+  font-style: italic;
 }
 
-h3 {
-  font-size: var(--text-2xl);
-}
-
-h4 {
-  font-size: var(--text-xl);
+/* Mono for smaller headings and UI */
+h3, h4, h5, h6 {
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+  font-weight: var(--font-medium);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  font-size: var(--text-xs);
 }
 
 p {
+  font-family: var(--font-mono);
   line-height: var(--leading-relaxed);
+  font-size: var(--text-sm);
 }
 
 a {
-  color: var(--accent);
+  color: inherit;
   text-decoration: none;
-  transition: color var(--transition-fast);
-}
-
-a:hover {
-  color: var(--accent-hover);
 }
 
 code {
   font-family: var(--font-mono);
   font-size: 0.9em;
-  background-color: var(--surface);
-  padding: 0.125rem 0.375rem;
-  border-radius: var(--radius-sm);
+}
+
+/* ===========================================
+   VISIBLE GRID STRUCTURE
+   =========================================== */
+
+.grid-line {
+  border-bottom: 1px solid var(--border);
+}
+
+.grid-line-strong {
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.grid-container {
+  border: 1px solid var(--border);
+}
+
+/* Section dividers */
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ===========================================
+   LIST ROW STYLES - For Projects
+   =========================================== */
+
+.list-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 2rem;
+  align-items: center;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+  transition: background-color 0ms, color 0ms;
+  cursor: pointer;
+}
+
+.list-row:hover {
+  background-color: var(--text-primary);
+  color: var(--background);
+  margin-left: -1.5rem;
+  margin-right: -1.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.list-row:hover * {
+  color: var(--background) !important;
+}
+
+/* ===========================================
+   BUTTON STYLES - Sharp, No Rounded
+   =========================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-primary);
+  transition: background-color 0ms, color 0ms;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: var(--text-primary);
+  color: var(--background);
+  border-color: var(--text-primary);
+}
+
+.btn-accent {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn-accent:hover {
+  background-color: var(--accent);
+  color: var(--background);
+}
+
+/* ===========================================
+   IMAGE STYLES - Grayscale by default
+   =========================================== */
+
+.img-grayscale {
+  filter: grayscale(100%);
+  transition: filter var(--transition-base);
+}
+
+.img-grayscale:hover {
+  filter: grayscale(0%);
+}
+
+/* ===========================================
+   CARD/PANEL STYLES - Sharp edges only
+   =========================================== */
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+}
+
+.panel-elevated {
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-strong);
+}
+
+/* ===========================================
+   TAG/LABEL STYLES
+   =========================================== */
+
+.tag {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.tag-accent {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ===========================================
+   NAVIGATION STYLES
+   =========================================== */
+
+.nav-link {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid transparent;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--text-primary);
+  border-bottom-color: var(--accent);
+}
+
+/* ===========================================
+   STAMP/SIGNATURE FOOTER STYLE
+   =========================================== */
+
+.stamp {
+  border: 2px solid var(--text-primary);
+  padding: 1.5rem 2rem;
+  display: inline-block;
+  text-align: center;
+  transform: rotate(-3deg);
+}
+
+.stamp-inner {
+  border: 1px solid var(--text-primary);
+  padding: 1rem 1.5rem;
+}
+
+/* ===========================================
+   UTILITY OVERRIDES - Remove all rounding
+   =========================================== */
+
+.rounded,
+.rounded-sm,
+.rounded-md,
+.rounded-lg,
+.rounded-xl,
+.rounded-2xl,
+.rounded-3xl,
+.rounded-full {
+  border-radius: 0 !important;
 }
 
 /* ===========================================
@@ -195,17 +387,17 @@ code {
    =========================================== */
 
 ::selection {
-  background-color: var(--accent-muted);
-  color: var(--text-primary);
+  background-color: var(--accent);
+  color: var(--background);
 }
 
 /* ===========================================
-   SCROLLBAR STYLES (Webkit)
+   SCROLLBAR - Minimal
    =========================================== */
 
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -213,8 +405,7 @@ code {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: var(--radius-sm);
+  background: var(--border-strong);
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -222,70 +413,28 @@ code {
 }
 
 /* ===========================================
-   FOCUS STYLES
+   FOCUS STATES - Accessibility
    =========================================== */
 
-:focus-visible {
-  outline: 2px solid var(--accent);
+*:focus-visible {
+  outline: 1px solid var(--accent);
   outline-offset: 2px;
 }
 
 /* ===========================================
-   UTILITY CLASSES
+   RESPONSIVE GRID
    =========================================== */
 
-.text-balance {
-  text-wrap: balance;
-}
-
-.prose-width {
-  max-width: var(--max-width-prose);
-}
-
-.content-width {
-  max-width: var(--max-width-content);
-}
-
-/* Container with responsive padding */
-.container-padded {
-  width: 100%;
-  max-width: var(--max-width-content);
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: var(--space-6);
-  padding-right: var(--space-6);
-}
-
-@media (min-width: 768px) {
-  .container-padded {
-    padding-left: var(--space-8);
-    padding-right: var(--space-8);
+@media (max-width: 768px) {
+  .list-row {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
   }
-}
-
-@media (min-width: 1024px) {
-  .container-padded {
-    padding-left: var(--space-12);
-    padding-right: var(--space-12);
-  }
-}
-
-/* Section spacing */
-.section-spacing {
-  padding-top: var(--space-16);
-  padding-bottom: var(--space-16);
-}
-
-@media (min-width: 768px) {
-  .section-spacing {
-    padding-top: var(--space-24);
-    padding-bottom: var(--space-24);
-  }
-}
-
-@media (min-width: 1024px) {
-  .section-spacing {
-    padding-top: var(--space-32);
-    padding-bottom: var(--space-32);
+  
+  .list-row:hover {
+    margin-left: -1rem;
+    margin-right: -1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }

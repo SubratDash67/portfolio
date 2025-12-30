@@ -6,77 +6,55 @@ import { useRef } from "react";
 import { portfolioData } from "@/data";
 import { Container, Section } from "@/components/layout";
 
-const fadeInUpVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: [0.6, 0.05, 0.01, 0.9] as const,
-    },
-  },
-};
-
 export function Skills() {
   const { skills, training } = portfolioData;
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <Section id="skills" className="py-16 md:py-24 bg-surface-subtle">
+    <Section id="skills" className="py-24 md:py-32 border-t border-border">
       <Container>
         <div ref={ref}>
           {/* Section Header */}
           <motion.div
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            variants={fadeInUpVariants}
-            className="mb-12"
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="mb-16"
           >
-            <h2 className="text-2xl md:text-3xl font-semibold text-text-primary mb-4 tracking-tight">
-              Skills & Experience
+            <span className="font-mono text-xs uppercase tracking-[0.2em] text-text-muted block mb-4">
+              Technical Expertise
+            </span>
+            <h2 className="font-serif italic text-4xl md:text-5xl lg:text-6xl text-text-primary mb-6">
+              Skills
             </h2>
-            <p className="text-base text-text-secondary max-w-2xl leading-relaxed">
-              Evidence-based capabilities demonstrated through projects and
-              production systems. No self-assessed ratings—only proven
-              applications.
+            <p className="font-mono text-sm text-text-muted max-w-xl">
+              Evidence-based capabilities demonstrated through projects and production systems.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          {/* Skills Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
             {/* Languages */}
             <motion.div
-              initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-              variants={{
-                ...fadeInUpVariants,
-                visible: {
-                  ...fadeInUpVariants.visible,
-                  transition: {
-                    ...fadeInUpVariants.visible.transition,
-                    delay: 0.1,
-                  },
-                },
-              }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+              className="border-t border-border pt-6"
             >
-              <h3 className="text-lg font-medium text-text-primary mb-6">
+              <h3 className="font-mono text-xs uppercase tracking-[0.15em] text-accent mb-6">
                 Languages
               </h3>
               <div className="space-y-6">
-                {skills.languages.map((lang, index) => (
-                  <div key={lang.name} className="group">
-                    <h4 className="text-base font-medium text-text-primary mb-3">
+                {skills.languages.map((lang) => (
+                  <div key={lang.name} className="border-b border-border pb-4">
+                    <h4 className="font-mono text-sm text-text-primary mb-2">
                       {lang.name}
                     </h4>
-                    <ul className="space-y-2">
+                    <ul className="space-y-1">
                       {lang.used_in.map((usage, idx) => (
-                        <li
-                          key={idx}
-                          className="flex items-start gap-2 text-sm text-text-secondary"
-                        >
-                          <span className="text-text-tertiary mt-1 shrink-0">→</span>
-                          <span>{usage}</span>
+                        <li key={idx} className="font-mono text-xs text-text-muted">
+                          — {usage}
                         </li>
                       ))}
                     </ul>
@@ -87,154 +65,93 @@ export function Skills() {
 
             {/* Frameworks & Tools */}
             <motion.div
-              initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-              variants={{
-                ...fadeInUpVariants,
-                visible: {
-                  ...fadeInUpVariants.visible,
-                  transition: {
-                    ...fadeInUpVariants.visible.transition,
-                    delay: 0.2,
-                  },
-                },
-              }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.3, delay: 0.2 }}
+              className="border-t border-border pt-6"
             >
-              <h3 className="text-lg font-medium text-text-primary mb-6">
+              <h3 className="font-mono text-xs uppercase tracking-[0.15em] text-accent mb-6">
                 Frameworks & Tools
               </h3>
-              <div className="space-y-6">
-                {skills.frameworks_and_tools.map((tool, index) => (
-                  <div key={tool.name} className="group">
-                    <div className="flex items-start justify-between mb-2">
-                      <h4 className="text-base font-medium text-text-primary">
-                        {tool.name}
-                      </h4>
-                      {tool.artifacts.length > 0 && (
-                        <a
-                          href={tool.artifacts[0]}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-text-muted hover:text-text-primary transition-colors"
-                          aria-label={`View ${tool.name} artifact`}
-                        >
-                          <svg
-                            width="16"
-                            height="16"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            viewBox="0 0 24 24"
-                          >
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                            <polyline points="15 3 21 3 21 9" />
-                            <line x1="10" y1="14" x2="21" y2="3" />
-                          </svg>
-                        </a>
-                      )}
-                    </div>
-                    <p className="text-sm text-text-secondary">{tool.context}</p>
+              <div className="grid grid-cols-2 gap-4">
+                {skills.frameworks_and_tools.map((tool) => (
+                  <div
+                    key={tool.name}
+                    className="border border-border p-3 hover:bg-text-primary hover:text-background transition-none group"
+                  >
+                    <h4 className="font-mono text-xs text-text-primary group-hover:text-background mb-1">
+                      {tool.name}
+                    </h4>
+                    <p className="font-mono text-[10px] text-text-muted group-hover:text-background/70 line-clamp-2">
+                      {tool.context}
+                    </p>
                   </div>
                 ))}
               </div>
             </motion.div>
           </div>
 
-          {/* Systems & Concepts */}
-          <motion.div
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            variants={{
-              ...fadeInUpVariants,
-              visible: {
-                ...fadeInUpVariants.visible,
-                transition: {
-                  ...fadeInUpVariants.visible.transition,
-                  delay: 0.3,
-                },
-              },
-            }}
-            className="mt-12"
-          >
-            <h3 className="text-lg font-medium text-text-primary mb-6">
-              Systems & Concepts
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {skills.systems_and_concepts.map((concept, index) => (
-                <div
-                  key={index}
-                  className="flex items-start gap-2 text-sm text-text-secondary"
-                >
-                  <span className="text-text-tertiary mt-1 shrink-0">•</span>
-                  <span>{concept}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
+          {/* Systems & Concepts + Data & ML */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mt-12">
+            {/* Systems & Concepts */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.3, delay: 0.3 }}
+              className="border-t border-border pt-6"
+            >
+              <h3 className="font-mono text-xs uppercase tracking-[0.15em] text-accent mb-6">
+                Systems & Concepts
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {skills.systems_and_concepts.map((concept, index) => (
+                  <span key={index} className="tag">
+                    {concept}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
 
-          {/* Data & ML */}
-          <motion.div
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            variants={{
-              ...fadeInUpVariants,
-              visible: {
-                ...fadeInUpVariants.visible,
-                transition: {
-                  ...fadeInUpVariants.visible.transition,
-                  delay: 0.4,
-                },
-              },
-            }}
-            className="mt-12"
-          >
-            <h3 className="text-lg font-medium text-text-primary mb-6">
-              Data & ML Techniques
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {skills.data_and_ml.map((technique, index) => (
-                <div
-                  key={index}
-                  className="flex items-start gap-2 text-sm text-text-secondary"
-                >
-                  <span className="text-text-tertiary mt-1 shrink-0">•</span>
-                  <span>{technique}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
+            {/* Data & ML */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.3, delay: 0.4 }}
+              className="border-t border-border pt-6"
+            >
+              <h3 className="font-mono text-xs uppercase tracking-[0.15em] text-accent mb-6">
+                Data & ML Techniques
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {skills.data_and_ml.map((technique, index) => (
+                  <span key={index} className="tag">
+                    {technique}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          </div>
 
           {/* Training & Certifications */}
           <motion.div
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            variants={{
-              ...fadeInUpVariants,
-              visible: {
-                ...fadeInUpVariants.visible,
-                transition: {
-                  ...fadeInUpVariants.visible.transition,
-                  delay: 0.5,
-                },
-              },
-            }}
-            className="mt-16 pt-12 border-t border-border-subtle"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.3, delay: 0.5 }}
+            className="mt-16 pt-12 border-t border-border"
           >
-            <h3 className="text-lg font-medium text-text-primary mb-6">
-              Training & Certifications
+            <h3 className="font-mono text-xs uppercase tracking-[0.15em] text-accent mb-8">
+              Certifications
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {training.map((cert, index) => (
                 <div
                   key={index}
-                  className="p-5 bg-surface rounded-lg"
+                  className="border border-border p-4 hover:bg-text-primary hover:text-background transition-none group"
                 >
-                  <h4 className="text-base font-medium text-text-primary mb-2">
+                  <h4 className="font-mono text-sm text-text-primary group-hover:text-background mb-2">
                     {cert.title}
                   </h4>
-                  <p className="text-sm text-text-secondary leading-relaxed">
+                  <p className="font-mono text-xs text-text-muted group-hover:text-background/70">
                     {cert.description}
                   </p>
                 </div>
