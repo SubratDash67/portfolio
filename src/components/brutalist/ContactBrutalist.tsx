@@ -50,9 +50,9 @@ export function ContactBrutalist() {
         className="mb-12"
       >
         <h3 className="font-display text-4xl md:text-6xl lg:text-7xl text-text-primary leading-[0.9]">
-          LET&apos;S BUILD
+          GET IN
           <br />
-          <span className="text-accent">SOMETHING</span>
+          <span className="text-accent">TOUCH</span>
         </h3>
       </motion.div>
 
@@ -101,16 +101,13 @@ export function ContactBrutalist() {
           <div className="flex items-center gap-3">
             <div className="w-2 h-2 bg-accent animate-pulse" />
             <span className="font-mono text-xs text-text-muted">
-              RESPONSE TIME: &lt;24H
+              ALWAYS LEARNING // ALWAYS BUILDING
             </span>
           </div>
           
           <div className="flex items-center gap-4">
             <span className="font-mono text-xs text-text-muted">
               {identity.location.city}, {identity.location.country}
-            </span>
-            <span className="font-mono text-xs text-text-muted">
-              // REMOTE AVAILABLE
             </span>
           </div>
         </div>
@@ -133,7 +130,7 @@ export function FooterBrutalist() {
             SUBRAT DASH
           </h4>
           <p className="font-mono text-xs text-text-muted">
-            ML SYSTEMS ENGINEER // {currentYear}
+            CS STUDENT // {currentYear}
           </p>
         </div>
 

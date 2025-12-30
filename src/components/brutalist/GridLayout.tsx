@@ -65,7 +65,7 @@ function SidebarNav() {
       {/* Decorative Elements */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
         <div className="w-px h-16 bg-border" />
-        <span className="font-mono text-[10px] text-text-muted vertical-text">2025</span>
+        <span className="font-mono text-[10px] text-text-muted vertical-text">2026</span>
       </div>
     </nav>
   );

@@ -10,8 +10,8 @@ export const portfolioData: PortfolioData = {
     full_name: "Subrat Dash",
     preferred_name: "Subrat",
     headline:
-      "Engineering student with interests in AI, ML and backend systems.",
-    roles: ["Software Engineer", "Data Science/ML Engineering"],
+      "CS student exploring machine learning, backend systems, and data engineering.",
+    roles: ["CS Student", "ML Enthusiast"],
     location: {
       city: "Bhubaneswar",
       country: "India",
@@ -28,7 +28,7 @@ export const portfolioData: PortfolioData = {
 
   summary: {
     short:
-      "I build data-driven software systems with a focus on machine learning pipelines, analytical backends, and end-to-end engineering rigor. My work emphasizes problem formulation, data quality, model evaluation, and deployment-aware design under real-world constraints such as limited compute and noisy data.",
+      "Building data-driven software systems with a focus on machine learning pipelines, analytical backends, and end-to-end engineering. My projects emphasize problem formulation, data quality, model evaluation, and deployment-aware design under real-world constraints.",
     focus_areas: [
       "Applied Machine Learning and Predictive Modeling (tabular, time-series, sports analytics)",
       "Backend Systems for ML (APIs, model serving, data pipelines, evaluation tooling)",

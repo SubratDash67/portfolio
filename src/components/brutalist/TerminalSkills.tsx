@@ -65,7 +65,7 @@ export function TerminalSkills() {
         viewport={{ once: true }}
         className="mt-8 pt-4 border-t border-terminal-green/30 font-mono text-xs text-terminal-green/60"
       >
-        <p>// LAST UPDATED: 2025-01-01 // KERNEL: ML-SYSTEMS v3.0</p>
+        system status: all modules loaded
       </motion.div>
     </section>
   );

@@ -85,7 +85,7 @@ export function AboutBrutalist() {
                   {edu.field}
                 </p>
                 <p className="font-mono text-xs text-text-muted">
-                  {edu.institution} // {edu.start_year}–{edu.end_year}
+                  {edu.institution}  {edu.start_year}–{edu.end_year}
                 </p>
                 <p className="font-mono text-xs text-accent mt-2">
                   CGPA: {edu.cgpa}

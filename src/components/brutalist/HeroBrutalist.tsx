@@ -27,7 +27,7 @@ export function HeroBrutalist() {
         >
           <div className="w-2 h-2 bg-accent animate-pulse" />
           <span className="font-mono text-xs text-accent uppercase tracking-[0.2em]">
-            SYSTEM ONLINE // AVAILABLE FOR WORK
+            PORTFOLIO V1.0 // SYSTEMS ACTIVE
           </span>
         </motion.div>
 
@@ -52,7 +52,7 @@ export function HeroBrutalist() {
         >
           <div className="h-px flex-1 max-w-[100px] bg-border" />
           <span className="font-mono text-sm text-text-secondary uppercase tracking-[0.1em]">
-            ML SYSTEMS ENGINEER
+            CS STUDENT // ML ENTHUSIAST
           </span>
         </motion.div>
 
@@ -64,9 +64,9 @@ export function HeroBrutalist() {
           className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl"
         >
           <MetaBlock label="LOC" value={`${identity.location.city}, ${identity.location.country}`} />
-          <MetaBlock label="STATUS" value="AVAILABLE" />
+          <MetaBlock label="STATUS" value="STUDENT" />
           <MetaBlock label="FOCUS" value="ML/BACKEND" />
-          <MetaBlock label="YEAR" value="2025" />
+          <MetaBlock label="YEAR" value="2026" />
         </motion.div>
 
         {/* CTA */}
@@ -106,7 +106,7 @@ function MetaBlock({ label, value }: { label: string; value: string }) {
 
 // Infinite Marquee
 export function MarqueeBanner() {
-  const text = "ML SYSTEMS ENGINEER // BACKEND ARCHITECTURE // DATA PIPELINES // PYTHON // PYTORCH // DEPLOYMENT // ";
+  const text = "PYTHON // PYTORCH // MACHINE LEARNING // BACKEND SYSTEMS // DATA ENGINEERING // FASTAPI // DOCKER // ";
   
   return (
     <div className="marquee-container py-4 bg-accent">

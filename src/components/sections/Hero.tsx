@@ -22,7 +22,7 @@ export function Hero() {
               className="mb-8"
             >
               <span className="font-mono text-xs uppercase tracking-[0.2em] text-text-muted">
-                Portfolio / 2025
+                Portfolio / 2026
               </span>
             </motion.div>
 
