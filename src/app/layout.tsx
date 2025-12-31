@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { Oswald, JetBrains_Mono } from "next/font/google";
+import { Oswald, JetBrains_Mono, Inter } from "next/font/google";
 import "./globals.css";
 
 const oswald = Oswald({
   variable: "--font-oswald",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
@@ -18,7 +25,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "SUBRAT DASH — ML SYSTEMS ENGINEER",
+    default: "SUBRAT DASH",
     template: "%s | SUBRAT DASH",
   },
   description:
@@ -37,13 +44,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "Subrat Dash Portfolio",
-    title: "SUBRAT DASH — ML SYSTEMS ENGINEER",
+    title: "SUBRAT DASH",
     description:
       "Engineering student building data-driven software systems with focus on machine learning pipelines, analytical backends, and deployment-aware design.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "SUBRAT DASH — ML SYSTEMS ENGINEER",
+    title: "SUBRAT DASH",
     description:
       "Engineering student building data-driven software systems with focus on machine learning pipelines, analytical backends, and deployment-aware design.",
   },
@@ -59,26 +66,29 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark overflow-x-hidden">
       <head>
         <style>{`
           :root {
             --font-display: ${oswald.style.fontFamily};
+            --font-body: ${inter.style.fontFamily};
             --font-mono: ${jetbrainsMono.style.fontFamily};
           }
         `}</style>
       </head>
       <body
-        className={`${oswald.variable} ${jetbrainsMono.variable} antialiased`}
+        className={`${oswald.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased overflow-x-hidden w-full max-w-full`}
         style={{
-          fontFamily: "var(--font-mono)",
+          fontFamily: "var(--font-body)",
         }}
       >
         {/* Noise Overlay */}
         <div className="noise-overlay" aria-hidden="true" />
         
         {/* Main Content */}
-        {children}
+        <div className="overflow-x-hidden w-full max-w-full">
+          {children}
+        </div>
       </body>
     </html>
   );

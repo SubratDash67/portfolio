@@ -16,7 +16,7 @@ A production-ready Next.js portfolio showcasing ML systems engineering work, bui
 - **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) (CSS custom properties)
 - **Animation**: [Framer Motion 12](https://www.framer.com/motion/)
 - **Language**: TypeScript 5
-- **Fonts**: [Geist Sans & Mono](https://vercel.com/font)
+- **Fonts**: [Geist Sans &amp; Mono](https://vercel.com/font)
 
 ## 📐 Design System
 

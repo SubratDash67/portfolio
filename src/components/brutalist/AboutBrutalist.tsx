@@ -2,150 +2,294 @@
 
 import { motion } from "framer-motion";
 import { portfolioData } from "@/data";
+import { useIsMobile } from "@/lib/hooks";
+
+// Focus area data with project counts
+const focusAreas = [
+  {
+    number: "01",
+    title: "Applied ML & Modeling",
+    description: "Building production-ready models for tabular, time-series, and domain-specific data with emphasis on interpretability.",
+    projectsCount: 3,
+    color: "var(--accent-primary)",
+  },
+  {
+    number: "02", 
+    title: "Backend Systems",
+    description: "Designing APIs, model serving infrastructure, data pipelines, and evaluation tooling that scale.",
+    projectsCount: 2,
+    color: "var(--data-cyan)",
+  },
+  {
+    number: "03",
+    title: "Explainable ML",
+    description: "Focusing on decision analysis, counterfactual reasoning, and making model predictions actionable.",
+    projectsCount: 1,
+    color: "var(--accent-code)",
+  },
+];
 
 export function AboutBrutalist() {
   const { summary, about, education } = portfolioData;
+  const isMobile = useIsMobile();
 
   return (
-    <section id="about" className="section">
+    <section 
+      id="about" 
+      className="section overflow-x-hidden px-4 md:px-6 lg:px-8"
+      aria-label="About"
+    >
       {/* Section Header */}
-      <div className="flex items-center justify-between mb-8 pb-4 border-b border-border">
-        <div className="flex items-center gap-4">
-          <span className="font-mono text-accent text-xs">[SYS]</span>
-          <h2 className="font-display text-3xl md:text-4xl text-text-primary">
+      <div className="section-header">
+        <div className="section-header-title">
+          <span className="section-header-badge">[INFO]</span>
+          <h2 className="font-display text-2xl md:text-3xl lg:text-4xl text-text-primary">
             ABOUT
           </h2>
         </div>
-        <span className="font-mono text-xs text-text-muted">
-          PROFILE DATA
+        <span className="section-header-meta">
+          PHILOSOPHY & BACKGROUND
         </span>
       </div>
 
-      {/* Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Main Info */}
+      {/* Two Column Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+        {/* Main Content - 2/3 width */}
         <div className="lg:col-span-8 space-y-8">
-          {/* Overview */}
-          <DataBlock
-            label="OVERVIEW"
-            index="01"
-            delay={0}
+          {/* Pull Quote */}
+          <motion.blockquote
+            initial={{ opacity: isMobile ? 1 : 0, x: isMobile ? 0 : -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="pull-quote"
           >
-            <p className="font-mono text-sm text-text-secondary leading-relaxed">
+            {about.technical_philosophy}
+          </motion.blockquote>
+
+          {/* Overview */}
+          <motion.div
+            initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+          >
+            <p className="text-text-secondary leading-relaxed">
               {summary.short}
             </p>
-          </DataBlock>
-
-          {/* Technical Philosophy */}
-          <DataBlock
-            label="TECHNICAL PHILOSOPHY"
-            index="02"
-            delay={0.1}
-          >
-            <p className="font-mono text-sm text-text-secondary leading-relaxed">
-              {about.technical_philosophy}
-            </p>
-          </DataBlock>
+          </motion.div>
 
           {/* Focus Areas */}
-          <DataBlock
-            label="FOCUS AREAS"
-            index="03"
-            delay={0.2}
+          <motion.div
+            initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.2 }}
           >
-            <div className="space-y-2">
-              {summary.focus_areas.map((area, i) => (
-                <div key={i} className="flex items-start gap-3">
-                  <span className="font-mono text-xs text-accent flex-shrink-0">
-                    [{String(i + 1).padStart(2, "0")}]
-                  </span>
-                  <span className="font-mono text-sm text-text-secondary">
-                    {area}
-                  </span>
-                </div>
+            <h3 className="font-display text-lg text-text-primary uppercase mb-6">
+              Core Competencies
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {focusAreas.map((area, index) => (
+                <FocusCard
+                  key={area.number}
+                  {...area}
+                  delay={isMobile ? 0 : index * 0.1}
+                  isMobile={isMobile}
+                />
               ))}
             </div>
-          </DataBlock>
-        </div>
+          </motion.div>
 
-        {/* Sidebar */}
-        <div className="lg:col-span-4 lg:border-l lg:border-border lg:pl-8 space-y-8">
-          {/* Education */}
-          <DataBlock
-            label="EDUCATION"
-            index="04"
-            delay={0.3}
+          {/* Methodology */}
+          <motion.div
+            initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.3 }}
+            className="card p-6"
           >
-            {education.map((edu, i) => (
-              <div key={i} className="mb-4 last:mb-0 pb-4 last:pb-0 border-b border-border last:border-b-0">
-                <h4 className="font-display text-sm text-text-primary mb-1">
-                  {edu.degree}
-                </h4>
-                <p className="font-mono text-xs text-text-muted mb-1">
-                  {edu.field}
-                </p>
-                <p className="font-mono text-xs text-text-muted">
-                  {edu.institution}  {edu.start_year}–{edu.end_year}
-                </p>
-                <p className="font-mono text-xs text-accent mt-2">
-                  CGPA: {edu.cgpa}
-                </p>
-              </div>
-            ))}
-          </DataBlock>
-
-          {/* Learning Style */}
-          <DataBlock
-            label="METHODOLOGY"
-            index="05"
-            delay={0.4}
-          >
-            <div className="space-y-2">
+            <h3 className="font-display text-lg text-text-primary uppercase mb-4">
+              Approach & Methodology
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {about.learning_style.map((item, i) => (
-                <div key={i} className="flex items-start gap-2">
-                  <span className="font-mono text-accent text-xs">→</span>
-                  <span className="font-mono text-xs text-text-muted">
+                <div key={i} className="flex items-start gap-3">
+                  <span className="w-6 h-6 flex items-center justify-center border border-accent-primary text-accent-primary font-mono text-xs shrink-0">
+                    {i + 1}
+                  </span>
+                  <span className="text-sm text-text-secondary">
                     {item}
                   </span>
                 </div>
               ))}
             </div>
-          </DataBlock>
+          </motion.div>
+        </div>
+
+        {/* Sidebar - 1/3 width */}
+        <div className="lg:col-span-4 space-y-6">
+          {/* Education Card */}
+          <motion.div
+            initial={{ opacity: isMobile ? 1 : 0, x: isMobile ? 0 : 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.2 }}
+            className="card-elevated p-6"
+          >
+            <h3 className="font-display text-sm text-text-primary uppercase mb-4 flex items-center gap-2">
+              <span className="w-2 h-2 bg-accent-primary" aria-hidden="true" />
+              Education
+            </h3>
+            {education.map((edu, i) => (
+              <div key={i} className="pb-4 last:pb-0">
+                <h4 className="font-display text-base text-text-primary mb-1">
+                  {edu.degree}
+                </h4>
+                <p className="font-mono text-xs text-text-muted mb-1">
+                  {edu.field}
+                </p>
+                <p className="text-sm text-text-secondary mb-3">
+                  {edu.institution}
+                </p>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="font-mono text-xs text-text-muted">
+                    {edu.start_year} – {edu.end_year}
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-xs text-text-muted">CGPA</span>
+                    <span className="font-display text-xl text-accent-primary font-bold">
+                      {edu.cgpa}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Quick Facts Card */}
+          <motion.div
+            initial={{ opacity: isMobile ? 1 : 0, x: isMobile ? 0 : 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.3 }}
+            className="card p-6"
+          >
+            <h3 className="font-display text-sm text-text-primary uppercase mb-4 flex items-center gap-2">
+              <span className="w-2 h-2 bg-accent-secondary" aria-hidden="true" />
+              Quick Facts
+            </h3>
+            <div className="space-y-4">
+              <QuickFact 
+                label="Location" 
+                value={`${portfolioData.identity.location.city}, ${portfolioData.identity.location.country}`}
+              />
+              <QuickFact 
+                label="Status" 
+                value="Open to Opportunities" 
+                highlight
+              />
+              <QuickFact 
+                label="Focus" 
+                value="ML Systems Engineering"
+              />
+              <QuickFact 
+                label="Graduation" 
+                value="2026"
+              />
+            </div>
+          </motion.div>
+
+          {/* Interests Card */}
+          <motion.div
+            initial={{ opacity: isMobile ? 1 : 0, x: isMobile ? 0 : 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.4 }}
+            className="card p-6"
+          >
+            <h3 className="font-display text-sm text-text-primary uppercase mb-4 flex items-center gap-2">
+              <span className="w-2 h-2 bg-accent-tertiary" aria-hidden="true" />
+              Current Interests
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {about.outside_interests.map((interest: string, i: number) => (
+                <span key={i} className="tech-badge">
+                  {interest}
+                </span>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
   );
 }
 
-function DataBlock({ 
-  label, 
-  index, 
-  children, 
-  delay = 0 
+// Focus Card Component
+function FocusCard({ 
+  number, 
+  title, 
+  description, 
+  projectsCount,
+  color,
+  delay,
+  isMobile
 }: { 
-  label: string; 
-  index: string; 
-  children: React.ReactNode; 
-  delay?: number;
+  number: string;
+  title: string;
+  description: string;
+  projectsCount: number;
+  color: string;
+  delay: number;
+  isMobile: boolean;
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4, delay }}
-      className="border border-border p-4"
+      className="card group hover:border-accent-primary transition-colors p-4 min-h-45 flex flex-col"
+      style={{ borderLeftColor: color, borderLeftWidth: '3px' }}
     >
-      {/* Header */}
-      <div className="flex items-center gap-3 mb-4 pb-2 border-b border-border">
-        <span className="font-mono text-xs text-text-muted">[{index}]</span>
-        <span className="font-mono text-xs text-accent uppercase tracking-wider">
-          {label}
+      <span className="font-mono text-xs text-text-muted mb-2 block">
+        [{number}]
+      </span>
+      <h4 className="font-display text-sm text-text-primary mb-2 group-hover:text-accent-primary transition-colors leading-tight">
+        {title}
+      </h4>
+      <p className="text-xs text-text-muted mb-4 leading-relaxed grow overflow-hidden">
+        {description}
+      </p>
+      <div className="flex items-center gap-2 pt-3 border-t border-border-subtle">
+        <span className="font-display text-lg font-bold" style={{ color }}>
+          {projectsCount}
+        </span>
+        <span className="font-mono text-xs text-text-muted">
+          {projectsCount === 1 ? 'project' : 'projects'}
         </span>
       </div>
-      
-      {/* Content */}
-      {children}
     </motion.div>
+  );
+}
+
+// Quick Fact Component
+function QuickFact({ 
+  label, 
+  value, 
+  highlight = false 
+}: { 
+  label: string; 
+  value: string; 
+  highlight?: boolean;
+}) {
+  return (
+    <div className="flex items-center justify-between">
+      <span className="font-mono text-xs text-text-muted uppercase">{label}</span>
+      <span className={`text-sm ${highlight ? 'text-accent-primary font-medium' : 'text-text-primary'}`}>
+        {value}
+      </span>
+    </div>
   );
 }

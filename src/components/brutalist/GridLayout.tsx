@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 
 interface GridLayoutProps {
@@ -9,9 +9,33 @@ interface GridLayoutProps {
 
 export function GridLayout({ children }: GridLayoutProps) {
   return (
-    <div className="grid-container">
-      <main className="main-content">{children}</main>
-      <SidebarNav />
+    <>
+      {/* Scroll Progress Indicator */}
+      <ScrollProgress />
+      
+      <div className="grid-container overflow-x-hidden max-w-full w-full">
+        <main className="main-content overflow-x-hidden max-w-full w-full">{children}</main>
+        <SidebarNav />
+      </div>
+    </>
+  );
+}
+
+// Scroll Progress Indicator
+function ScrollProgress() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  return (
+    <div className="scroll-progress">
+      <motion.div 
+        className="scroll-progress-bar"
+        style={{ scaleX }}
+      />
     </div>
   );
 }
@@ -19,13 +43,14 @@ export function GridLayout({ children }: GridLayoutProps) {
 // Sidebar Navigation (Desktop Only)
 function SidebarNav() {
   const [activeSection, setActiveSection] = useState("hero");
+  const { scrollYProgress } = useScroll();
   
   const navItems = [
-    { id: "hero", label: "HOME" },
-    { id: "projects", label: "PROJECTS" },
-    { id: "skills", label: "SKILLS" },
-    { id: "about", label: "ABOUT" },
-    { id: "contact", label: "CONTACT" },
+    { id: "hero", label: "HOME", icon: "◈" },
+    { id: "projects", label: "WORK", icon: "◇" },
+    { id: "skills", label: "STACK", icon: "⚙" },
+    { id: "about", label: "INFO", icon: "◎" },
+    { id: "contact", label: "CONNECT", icon: "✉" },
   ];
 
   useEffect(() => {
@@ -47,16 +72,28 @@ function SidebarNav() {
   }, []);
 
   return (
-    <nav className="sidebar-nav border-l border-border flex flex-col items-center justify-center gap-8 bg-bg">
+    <nav 
+      className="sidebar-nav border-l border-border-subtle flex flex-col items-center justify-center gap-6 bg-bg"
+      aria-label="Main navigation"
+    >
+      {/* Progress indicator line */}
+      <div className="absolute left-0 top-0 bottom-0 w-px bg-border-subtle">
+        <motion.div 
+          className="w-full bg-accent-primary origin-top"
+          style={{ scaleY: scrollYProgress }}
+        />
+      </div>
+      
       {navItems.map((item) => (
         <a
           key={item.id}
           href={`#${item.id}`}
-          className={`vertical-text font-mono text-xs tracking-[0.2em] uppercase transition-none py-4 ${
+          className={`vertical-text font-mono text-xs tracking-[0.15em] uppercase transition-colors py-3 flex items-center gap-2 ${
             activeSection === item.id
-              ? "text-accent"
+              ? "text-accent-primary"
               : "text-text-muted hover:text-text-primary"
           }`}
+          aria-current={activeSection === item.id ? "page" : undefined}
         >
           {item.label}
         </a>
@@ -64,8 +101,8 @@ function SidebarNav() {
       
       {/* Decorative Elements */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-        <div className="w-px h-16 bg-border" />
-        <span className="font-mono text-[10px] text-text-muted vertical-text">2026</span>
+        <div className="w-px h-12 bg-border-subtle" />
+        <span className="font-mono text-xs text-text-muted vertical-text">2026</span>
       </div>
     </nav>
   );
@@ -108,12 +145,13 @@ export function MobileNav() {
   }, []);
 
   return (
-    <nav className="mobile-nav lg:hidden">
+    <nav className="mobile-nav lg:hidden" aria-label="Mobile navigation">
       {navItems.map((item) => (
         <a
           key={item.id}
           href={`#${item.id}`}
           className={`mobile-nav-item ${activeSection === item.id ? "active" : ""}`}
+          aria-current={activeSection === item.id ? "page" : undefined}
         >
           {item.label}
         </a>

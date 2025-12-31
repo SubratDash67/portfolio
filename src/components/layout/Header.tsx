@@ -29,7 +29,7 @@ export function Header() {
     >
       {/* Main Nav Bar */}
       <div className="border-b border-border">
-        <div className="w-full max-w-[80rem] mx-auto px-6 md:px-8">
+        <div className="w-full max-w-7xl mx-auto px-6 md:px-8">
           <div className="flex items-center justify-between h-14">
             {/* Logo */}
             <Link

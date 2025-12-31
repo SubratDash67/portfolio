@@ -84,7 +84,7 @@ export function Contact() {
                           {String(index + 1).padStart(2, "0")}
                         </span>
                         <div>
-                          <h3 className="font-mono text-sm uppercase tracking-[0.1em] text-text-primary mb-1 group-hover:text-bg transition-colors duration-0">
+                          <h3 className="font-mono text-sm uppercase tracking-widest text-text-primary mb-1 group-hover:text-bg transition-colors duration-0">
                             {link.label}
                           </h3>
                           <p className="font-mono text-xs text-text-muted group-hover:text-bg/70 transition-colors duration-0">
