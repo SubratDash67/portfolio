@@ -87,11 +87,33 @@ export function ProjectsDatabase() {
         </AnimatePresence>
       )}
 
-      {/* Footer Note */}
+      {/* Decorative Footer */}
       <div className="mt-8 pt-6 border-t border-border-subtle">
-        <p className="font-mono text-xs text-text-muted">
-          Click any project for detailed case study {!isMobile && "// Hover for preview"}
-        </p>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <p className="font-mono text-xs text-text-muted">
+            Click any project for detailed case study
+          </p>
+          
+          {/* Decorative dots pattern */}
+          <div className="flex items-center gap-4">
+            <div className="flex gap-1">
+              {[...Array(5)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="w-1.5 h-1.5 bg-border-default"
+                  initial={{ opacity: 0, scale: 0 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.2, delay: i * 0.05 }}
+                  whileHover={{ backgroundColor: 'var(--accent-primary)' }}
+                />
+              ))}
+            </div>
+            <span className="font-mono text-xs text-text-muted">
+              {portfolioData.projects.length} systems built
+            </span>
+          </div>
+        </div>
       </div>
     </section>
   );

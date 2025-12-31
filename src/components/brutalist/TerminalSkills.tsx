@@ -87,9 +87,9 @@ export function TerminalSkills() {
       </div>
 
       {/* Main Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-        {/* Left Column - Radar Chart & Timeline */}
-        <div className="lg:col-span-5 space-y-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
+        {/* Left Column - Radar Chart & Timeline (Hidden on mobile) */}
+        <div className="hidden md:block lg:col-span-5 space-y-8">
           {/* Radar Chart */}
           <motion.div
             initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 20 }}
@@ -123,7 +123,7 @@ export function TerminalSkills() {
                     <span className="text-text-primary font-medium">
                       {item.skills.join(", ")}
                     </span>
-                    <span className="text-text-muted ml-2">— {item.context}</span>
+                    <span className="text-text-muted ml-2 hidden sm:inline">— {item.context}</span>
                   </div>
                 </div>
               ))}
@@ -131,8 +131,8 @@ export function TerminalSkills() {
           </motion.div>
         </div>
 
-        {/* Right Column - Skill Categories */}
-        <div className="lg:col-span-7 space-y-6">
+        {/* Right Column - Skill Categories (Full width on mobile) */}
+        <div className="lg:col-span-7 space-y-4 md:space-y-6">
           {skillCategories.map((category, catIndex) => (
             <motion.div
               key={category.title}
@@ -140,23 +140,23 @@ export function TerminalSkills() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: isMobile ? 0 : catIndex * 0.1 }}
-              className="card p-6"
+              className="card p-4 md:p-6"
             >
               {/* Category Header */}
-              <div className="flex items-center gap-3 mb-5 pb-4 border-b border-border-subtle">
+              <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-5 pb-3 md:pb-4 border-b border-border-subtle">
                 <span 
-                  className="w-8 h-8 flex items-center justify-center border"
+                  className="w-6 h-6 md:w-8 md:h-8 flex items-center justify-center border text-sm"
                   style={{ borderColor: category.color, color: category.color }}
                 >
                   {category.icon}
                 </span>
-                <h3 className="font-display text-lg text-text-primary uppercase">
+                <h3 className="font-display text-base md:text-lg text-text-primary uppercase">
                   {category.title}
                 </h3>
               </div>
 
-              {/* Skills Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Skills Grid - Single column on mobile */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                 {category.items.map((skill) => (
                   <SkillPill 
                     key={skill.name} 
@@ -175,22 +175,22 @@ export function TerminalSkills() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.3 }}
-            className="card p-6"
+            className="card p-4 md:p-6"
           >
-            <div className="flex items-center gap-3 mb-5 pb-4 border-b border-border-subtle">
+            <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-5 pb-3 md:pb-4 border-b border-border-subtle">
               <span 
-                className="w-8 h-8 flex items-center justify-center border border-accent-secondary text-accent-secondary"
+                className="w-6 h-6 md:w-8 md:h-8 flex items-center justify-center border border-accent-secondary text-accent-secondary text-sm"
               >
                 ∞
               </span>
-              <h3 className="font-display text-lg text-text-primary uppercase">
+              <h3 className="font-display text-base md:text-lg text-text-primary uppercase">
                 Systems & Concepts
               </h3>
             </div>
             <div className="flex flex-wrap gap-2">
-              {skills.systems_and_concepts.slice(0, 5).map((concept, i) => (
+              {skills.systems_and_concepts.slice(0, 4).map((concept, i) => (
                 <span key={i} className="tech-badge text-xs">
-                  {concept.length > 50 ? concept.substring(0, 50) + "..." : concept}
+                  {concept.length > 35 ? concept.substring(0, 35) + "..." : concept}
                 </span>
               ))}
             </div>
@@ -198,14 +198,51 @@ export function TerminalSkills() {
         </div>
       </div>
 
-      {/* Footer */}
+      {/* Decorative Footer */}
       <motion.div
         initial={{ opacity: isMobile ? 1 : 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        className="mt-8 pt-6 border-t border-border-subtle font-mono text-xs text-text-muted"
+        className="mt-8 pt-6 border-t border-border-subtle"
       >
-        Proficiency based on project usage and depth of implementation
+        <div className="flex items-center justify-between">
+          <span className="font-mono text-xs text-text-muted">
+            Proficiency based on project implementation
+          </span>
+          <div className="flex items-center gap-3">
+            {/* Mini decorative bars */}
+            <div className="flex items-end gap-1 h-4">
+              <motion.div 
+                className="w-1 bg-accent-primary"
+                initial={{ height: 0 }}
+                whileInView={{ height: '100%' }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.1 }}
+              />
+              <motion.div 
+                className="w-1 bg-accent-secondary"
+                initial={{ height: 0 }}
+                whileInView={{ height: '60%' }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.2 }}
+              />
+              <motion.div 
+                className="w-1 bg-accent-tertiary"
+                initial={{ height: 0 }}
+                whileInView={{ height: '80%' }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.3 }}
+              />
+              <motion.div 
+                className="w-1 bg-accent-code"
+                initial={{ height: 0 }}
+                whileInView={{ height: '40%' }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.4 }}
+              />
+            </div>
+          </div>
+        </div>
       </motion.div>
     </section>
   );

@@ -2,7 +2,7 @@
 
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { portfolioData } from "@/data";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useIsMobile } from "@/lib/hooks";
 
 // Animation variants
@@ -295,32 +295,40 @@ function MagneticButton({
   );
 }
 
-// Refined Marquee Banner
+// Decorative Section Divider
 export function MarqueeBanner() {
-  const skills = [
-    "PYTHON", "PYTORCH", "LIGHTGBM", "SCIKIT-LEARN", 
-    "FASTAPI", "PANDAS", "NUMPY", "STREAMLIT",
-    "MACHINE LEARNING", "DATA ENGINEERING", "BACKEND SYSTEMS"
-  ];
-  
-  const text = skills.map(s => `${s} //`).join(" ") + " ";
-  
   return (
     <div 
-      className="w-full max-w-full overflow-hidden"
+      className="w-full border-y border-border-default py-4 md:py-6 overflow-hidden"
       role="presentation"
       aria-hidden="true"
     >
-      <div className="marquee-container py-4">
-        <div className="marquee-content">
-          {[...Array(4)].map((_, i) => (
-            <span
-              key={i}
-              className="font-display text-sm md:text-base lg:text-lg text-text-inverse uppercase tracking-[0.15em] px-4 md:px-8 whitespace-nowrap"
-            >
-              {text}
-            </span>
-          ))}
+      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-4">
+          {/* Left geometric pattern */}
+          <div className="flex items-center gap-2 text-border-default">
+            <span className="w-2 h-2 bg-accent-primary" />
+            <span className="w-8 h-px bg-border-default" />
+            <span className="w-1 h-1 bg-border-default" />
+            <span className="w-4 h-px bg-border-default hidden sm:block" />
+          </div>
+          
+          {/* Center pattern */}
+          <div className="flex items-center gap-1 font-mono text-xs text-text-muted tracking-[0.5em]">
+            <span className="hidden md:inline">◇</span>
+            <span>—</span>
+            <span className="text-accent-primary">●</span>
+            <span>—</span>
+            <span className="hidden md:inline">◇</span>
+          </div>
+          
+          {/* Right geometric pattern */}
+          <div className="flex items-center gap-2 text-border-default">
+            <span className="w-4 h-px bg-border-default hidden sm:block" />
+            <span className="w-1 h-1 bg-border-default" />
+            <span className="w-8 h-px bg-border-default" />
+            <span className="w-2 h-2 bg-accent-primary" />
+          </div>
         </div>
       </div>
     </div>

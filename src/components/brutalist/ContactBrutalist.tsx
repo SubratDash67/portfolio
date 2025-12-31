@@ -43,7 +43,7 @@ export function ContactBrutalist() {
       aria-label="Contact"
     >
       {/* Section Header */}
-      <div className="section-header">
+      <div className="section-header relative z-10">
         <div className="section-header-title">
           <span className="section-header-badge">[CONNECT]</span>
           <h2 className="font-display text-2xl md:text-3xl lg:text-4xl text-text-primary">
