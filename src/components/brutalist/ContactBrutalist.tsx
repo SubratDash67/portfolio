@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { portfolioData } from "@/data";
-import { useIsMobile } from "@/lib/hooks";
+import { useIsMobile, useHasMounted } from "@/lib/hooks";
 
 // Contact methods data
 const contactMethods = [
@@ -35,6 +35,8 @@ const contactMethods = [
 export function ContactBrutalist() {
   const { identity } = portfolioData;
   const isMobile = useIsMobile();
+  const hasMounted = useHasMounted();
+  const shouldAnimate = hasMounted && !isMobile;
 
   return (
     <section 
@@ -57,9 +59,9 @@ export function ContactBrutalist() {
 
       {/* Large CTA Heading */}
       <motion.div
-        initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 30 }}
+        initial={shouldAnimate ? { opacity: 0, y: 30 } : false}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.6 }}
         className="mb-12"
       >
@@ -80,18 +82,18 @@ export function ContactBrutalist() {
           <ContactCard
             key={method.label}
             {...method}
-            delay={isMobile ? 0 : index * 0.1}
-            isMobile={isMobile}
+            delay={shouldAnimate ? index * 0.1 : 0}
+            shouldAnimate={shouldAnimate}
           />
         ))}
       </div>
 
       {/* Availability Banner */}
       <motion.div
-        initial={{ opacity: isMobile ? 1 : 0 }}
+        initial={shouldAnimate ? { opacity: 0 } : false}
         whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.4, delay: 0.3 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.4, delay: shouldAnimate ? 0.3 : 0 }}
         className="card-accent bg-bg-elevated p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
       >
         <div className="flex items-center gap-4">
@@ -101,7 +103,7 @@ export function ContactBrutalist() {
               Current Status
             </span>
             <span className="text-text-primary font-medium">
-              Available for opportunities starting Summer 2026
+              Open to collaborations.
             </span>
           </div>
         </div>
@@ -118,9 +120,9 @@ export function ContactBrutalist() {
 
       {/* Location Info */}
       <motion.div
-        initial={{ opacity: isMobile ? 1 : 0 }}
+        initial={shouldAnimate ? { opacity: 0 } : false}
         whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
+        viewport={{ once: true, amount: 0.2 }}
         className="mt-8 pt-6 border-t border-border-subtle"
       >
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -149,7 +151,7 @@ function ContactCard({
   primary = false,
   external = false,
   delay,
-  isMobile,
+  shouldAnimate,
 }: {
   icon: string;
   label: string;
@@ -159,16 +161,16 @@ function ContactCard({
   primary?: boolean;
   external?: boolean;
   delay: number;
-  isMobile: boolean;
+  shouldAnimate: boolean;
 }) {
   return (
     <motion.a
       href={href}
       target={external ? "_blank" : undefined}
       rel={external ? "noopener noreferrer" : undefined}
-      initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 20 }}
+      initial={shouldAnimate ? { opacity: 0, y: 20 } : false}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.4, delay }}
       className={`contact-card group ${primary ? 'contact-card-primary' : ''}`}
     >
@@ -277,7 +279,7 @@ export function FooterBrutalist() {
           </div>
           
           <div className="flex items-center gap-3">
-            <span className="font-mono text-xs text-accent-primary">v2.0</span>
+            <span className="font-mono text-xs text-accent-primary">v1.0</span>
             <span className="w-2 h-2 bg-success" aria-hidden="true" />
           </div>
         </div>

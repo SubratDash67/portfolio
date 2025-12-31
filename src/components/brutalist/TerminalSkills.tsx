@@ -1,71 +1,51 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
 import { portfolioData } from "@/data";
-import { useIsMobile } from "@/lib/hooks";
+import { useIsMobile, useHasMounted } from "@/lib/hooks";
 
-// Skill proficiency data
-const skillProficiency: Record<string, number> = {
-  "Python": 95,
-  "C": 70,
-  "Java": 65,
-  "Scikit-learn": 90,
-  "LightGBM": 88,
-  "PyTorch": 85,
-  "Pandas / NumPy": 92,
-  "Streamlit": 80,
-  "Git / GitHub": 85,
-  "FastAPI": 75,
-  "Docker": 70,
+// Skill categories organized by context of use
+const skillContexts = {
+  "Model Development": {
+    icon: "◆",
+    color: "var(--accent-primary)",
+    description: "Building and training ML models",
+    skills: ["Python", "PyTorch", "Scikit-learn", "LightGBM"],
+  },
+  "Data Engineering": {
+    icon: "⬡",
+    color: "var(--data-cyan)",
+    description: "Processing and pipeline design",
+    skills: ["Pandas", "NumPy", "SQL", "Data Pipelines"],
+  },
+  "Backend & APIs": {
+    icon: "{ }",
+    color: "var(--accent-code)",
+    description: "Service architecture and deployment",
+    skills: ["FastAPI", "REST APIs", "Docker", "Git"],
+  },
+  "Analysis & Viz": {
+    icon: "◎",
+    color: "var(--accent-tertiary)",
+    description: "Insights and communication",
+    skills: ["Streamlit", "Matplotlib", "Jupyter", "SHAP"],
+  },
 };
 
-// Radar chart dimensions
-const radarDimensions = [
-  { label: "ML/AI", value: 92 },
-  { label: "Backend", value: 85 },
-  { label: "Data Eng", value: 88 },
-  { label: "Frontend", value: 65 },
-  { label: "DevOps", value: 72 },
-];
-
-// Skill acquisition timeline
-const skillTimeline = [
-  { year: "2022", skills: ["Python", "C"], context: "Started B.Tech" },
-  { year: "2023", skills: ["PyTorch", "Scikit-learn"], context: "ML Focus" },
-  { year: "2024", skills: ["LightGBM", "FastAPI"], context: "Production Systems" },
-  { year: "2025", skills: ["Docker", "Streamlit"], context: "Deployment" },
-];
+// Project-skill mapping to show real usage
+const projectSkillUsage: Record<string, string[]> = {
+  "DNS Threat Detection": ["Python", "LightGBM", "BiLSTM", "Ensemble Methods"],
+  "Counterfactual Scout": ["PyTorch", "Pandas", "StatsBomb API", "Visualization"],
+  "KiitRail": ["Scikit-learn", "FastAPI", "Feature Engineering", "Streamlit"],
+};
 
 export function TerminalSkills() {
   const { skills } = portfolioData;
   const isMobile = useIsMobile();
+  const hasMounted = useHasMounted();
 
-  const skillCategories = [
-    {
-      title: "Languages",
-      icon: "{ }",
-      color: "var(--accent-code)",
-      items: skills.languages.map(l => ({ name: l.name, proficiency: skillProficiency[l.name] || 75 })),
-    },
-    {
-      title: "ML & Data",
-      icon: "◆",
-      color: "var(--accent-primary)",
-      items: skills.frameworks_and_tools.filter(f => 
-        ["Scikit-learn", "LightGBM", "PyTorch", "Pandas / NumPy"].includes(f.name)
-      ).map(f => ({ name: f.name, proficiency: skillProficiency[f.name] || 80 })),
-    },
-    {
-      title: "Tools & Infra",
-      icon: "⚙",
-      color: "var(--accent-tertiary)",
-      items: skills.frameworks_and_tools.filter(f => 
-        ["Streamlit", "Git / GitHub", "FastAPI", "Docker"].includes(f.name) || 
-        !["Scikit-learn", "LightGBM", "PyTorch", "Pandas / NumPy"].includes(f.name)
-      ).map(f => ({ name: f.name, proficiency: skillProficiency[f.name] || 75 })),
-    },
-  ];
+  // Prevent animation flicker by skipping initial animation state until mounted
+  const shouldAnimate = hasMounted && !isMobile;
 
   return (
     <section 
@@ -86,312 +66,118 @@ export function TerminalSkills() {
         </span>
       </div>
 
-      {/* Main Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
-        {/* Left Column - Radar Chart & Timeline (Hidden on mobile) */}
-        <div className="hidden md:block lg:col-span-5 space-y-8">
-          {/* Radar Chart */}
+      {/* Main Grid - Skills by Context */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-10">
+        {Object.entries(skillContexts).map(([title, data], index) => (
           <motion.div
-            initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 20 }}
+            key={title}
+            initial={shouldAnimate ? { opacity: 0, y: 20 } : false}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="card p-6"
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.4, delay: shouldAnimate ? index * 0.1 : 0 }}
+            className="card p-5 group hover:border-l-2 transition-all"
+            style={{ borderLeftColor: data.color }}
           >
-            <h3 className="font-mono text-xs text-text-muted uppercase tracking-wider mb-6">
-              Proficiency Overview
-            </h3>
-            <RadarChart dimensions={radarDimensions} />
-          </motion.div>
-
-          {/* Timeline */}
-          <motion.div
-            initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="card p-6"
-          >
-            <h3 className="font-mono text-xs text-text-muted uppercase tracking-wider mb-6">
-              Learning Timeline
-            </h3>
-            <div className="timeline">
-              {skillTimeline.map((item, index) => (
-                <div key={item.year} className="timeline-item">
-                  <span className="timeline-year">{item.year}</span>
-                  <div className="timeline-content">
-                    <span className="text-text-primary font-medium">
-                      {item.skills.join(", ")}
-                    </span>
-                    <span className="text-text-muted ml-2 hidden sm:inline">— {item.context}</span>
-                  </div>
+            {/* Header */}
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <span style={{ color: data.color }}>{data.icon}</span>
+                  <h3 className="font-display text-base text-text-primary uppercase">
+                    {title}
+                  </h3>
                 </div>
+                <p className="font-mono text-xs text-text-muted">
+                  {data.description}
+                </p>
+              </div>
+            </div>
+
+            {/* Skills as Tags */}
+            <div className="flex flex-wrap gap-2">
+              {data.skills.map((skill) => (
+                <span
+                  key={skill}
+                  className="font-mono text-xs px-3 py-1.5 bg-bg border border-border-subtle text-text-secondary hover:text-text-primary hover:border-border-default transition-colors"
+                >
+                  {skill}
+                </span>
               ))}
             </div>
           </motion.div>
+        ))}
+      </div>
+
+      {/* Skills in Action - Project Context */}
+      <motion.div
+        initial={shouldAnimate ? { opacity: 0, y: 20 } : false}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.5 }}
+        className="card p-5 md:p-6"
+      >
+        <div className="flex items-center gap-2 mb-6 pb-4 border-b border-border-subtle">
+          <span className="text-accent-primary">→</span>
+          <h3 className="font-display text-base md:text-lg text-text-primary uppercase">
+            Skills in Production
+          </h3>
         </div>
 
-        {/* Right Column - Skill Categories (Full width on mobile) */}
-        <div className="lg:col-span-7 space-y-4 md:space-y-6">
-          {skillCategories.map((category, catIndex) => (
-            <motion.div
-              key={category.title}
-              initial={{ opacity: isMobile ? 1 : 0, x: isMobile ? 0 : 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: isMobile ? 0 : catIndex * 0.1 }}
-              className="card p-4 md:p-6"
-            >
-              {/* Category Header */}
-              <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-5 pb-3 md:pb-4 border-b border-border-subtle">
-                <span 
-                  className="w-6 h-6 md:w-8 md:h-8 flex items-center justify-center border text-sm"
-                  style={{ borderColor: category.color, color: category.color }}
-                >
-                  {category.icon}
-                </span>
-                <h3 className="font-display text-base md:text-lg text-text-primary uppercase">
-                  {category.title}
-                </h3>
-              </div>
-
-              {/* Skills Grid - Single column on mobile */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-                {category.items.map((skill) => (
-                  <SkillPill 
-                    key={skill.name} 
-                    name={skill.name} 
-                    proficiency={skill.proficiency}
-                    color={category.color}
-                  />
+        <div className="space-y-4">
+          {Object.entries(projectSkillUsage).map(([project, usedSkills]) => (
+            <div key={project} className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+              <span className="font-mono text-sm text-text-primary w-[180px] shrink-0">
+                {project}
+              </span>
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-text-muted text-xs">→</span>
+                {usedSkills.map((skill, j) => (
+                  <span
+                    key={skill}
+                    className="font-mono text-xs text-text-muted"
+                  >
+                    {skill}{j < usedSkills.length - 1 ? "," : ""}
+                  </span>
                 ))}
               </div>
-            </motion.div>
+            </div>
           ))}
-
-          {/* Concepts & Systems */}
-          <motion.div
-            initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.3 }}
-            className="card p-4 md:p-6"
-          >
-            <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-5 pb-3 md:pb-4 border-b border-border-subtle">
-              <span 
-                className="w-6 h-6 md:w-8 md:h-8 flex items-center justify-center border border-accent-secondary text-accent-secondary text-sm"
-              >
-                ∞
-              </span>
-              <h3 className="font-display text-base md:text-lg text-text-primary uppercase">
-                Systems & Concepts
-              </h3>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {skills.systems_and_concepts.slice(0, 4).map((concept, i) => (
-                <span key={i} className="tech-badge text-xs">
-                  {concept.length > 35 ? concept.substring(0, 35) + "..." : concept}
-                </span>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Decorative Footer */}
-      <motion.div
-        initial={{ opacity: isMobile ? 1 : 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        className="mt-8 pt-6 border-t border-border-subtle"
-      >
-        <div className="flex items-center justify-between">
-          <span className="font-mono text-xs text-text-muted">
-            Proficiency based on project implementation
-          </span>
-          <div className="flex items-center gap-3">
-            {/* Mini decorative bars */}
-            <div className="flex items-end gap-1 h-4">
-              <motion.div 
-                className="w-1 bg-accent-primary"
-                initial={{ height: 0 }}
-                whileInView={{ height: '100%' }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.1 }}
-              />
-              <motion.div 
-                className="w-1 bg-accent-secondary"
-                initial={{ height: 0 }}
-                whileInView={{ height: '60%' }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.2 }}
-              />
-              <motion.div 
-                className="w-1 bg-accent-tertiary"
-                initial={{ height: 0 }}
-                whileInView={{ height: '80%' }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.3 }}
-              />
-              <motion.div 
-                className="w-1 bg-accent-code"
-                initial={{ height: 0 }}
-                whileInView={{ height: '40%' }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.4 }}
-              />
-            </div>
-          </div>
         </div>
       </motion.div>
-    </section>
-  );
-}
 
-// Radar Chart Component
-function RadarChart({ dimensions }: { dimensions: { label: string; value: number }[] }) {
-  const size = 200;
-  const center = size / 2;
-  const maxRadius = size / 2 - 30;
-  const angleStep = (2 * Math.PI) / dimensions.length;
-
-  // Calculate points for the data polygon
-  const dataPoints = dimensions.map((dim, i) => {
-    const angle = i * angleStep - Math.PI / 2;
-    const radius = (dim.value / 100) * maxRadius;
-    return {
-      x: center + radius * Math.cos(angle),
-      y: center + radius * Math.sin(angle),
-    };
-  });
-
-  const dataPath = dataPoints.map((p, i) => 
-    `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`
-  ).join(' ') + ' Z';
-
-  // Grid rings
-  const rings = [25, 50, 75, 100];
-
-  return (
-    <div className="flex justify-center">
-      <svg width={size} height={size} className="overflow-visible">
-        {/* Grid rings */}
-        {rings.map((ring) => {
-          const radius = (ring / 100) * maxRadius;
-          const points = dimensions.map((_, i) => {
-            const angle = i * angleStep - Math.PI / 2;
-            return `${center + radius * Math.cos(angle)},${center + radius * Math.sin(angle)}`;
-          }).join(' ');
-          return (
-            <polygon
-              key={ring}
-              points={points}
-              fill="none"
-              stroke="var(--border)"
-              strokeWidth="1"
-              opacity="0.3"
-            />
-          );
-        })}
-
-        {/* Axis lines */}
-        {dimensions.map((_, i) => {
-          const angle = i * angleStep - Math.PI / 2;
-          return (
-            <line
-              key={i}
-              x1={center}
-              y1={center}
-              x2={center + maxRadius * Math.cos(angle)}
-              y2={center + maxRadius * Math.sin(angle)}
-              stroke="var(--border)"
-              strokeWidth="1"
-              opacity="0.3"
-            />
-          );
-        })}
-
-        {/* Data polygon */}
-        <motion.path
-          d={dataPath}
-          fill="var(--accent-primary)"
-          fillOpacity="0.15"
-          stroke="var(--accent-primary)"
-          strokeWidth="2"
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          style={{ transformOrigin: 'center' }}
-        />
-
-        {/* Data points */}
-        {dataPoints.map((point, i) => (
-          <motion.circle
+      {/* Systems & Concepts */}
+      <motion.div
+        initial={shouldAnimate ? { opacity: 0 } : false}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, amount: 0.2 }}
+        className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4"
+      >
+        {skills.systems_and_concepts.slice(0, 3).map((concept, i) => (
+          <div 
             key={i}
-            cx={point.x}
-            cy={point.y}
-            r="4"
-            fill="var(--accent-primary)"
-            initial={{ opacity: 0, scale: 0 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.3, delay: 0.1 * i }}
-          />
+            className="p-4 border border-border-subtle bg-bg-elevated"
+          >
+            <span className="font-mono text-xs text-text-muted block mb-2">
+              [{String(i + 1).padStart(2, "0")}]
+            </span>
+            <p className="font-mono text-sm text-text-secondary leading-relaxed">
+              {concept.length > 60 ? concept.substring(0, 60) + "..." : concept}
+            </p>
+          </div>
         ))}
+      </motion.div>
 
-        {/* Labels */}
-        {dimensions.map((dim, i) => {
-          const angle = i * angleStep - Math.PI / 2;
-          const labelRadius = maxRadius + 20;
-          const x = center + labelRadius * Math.cos(angle);
-          const y = center + labelRadius * Math.sin(angle);
-          return (
-            <text
-              key={i}
-              x={x}
-              y={y}
-              textAnchor="middle"
-              dominantBaseline="middle"
-              className="font-mono text-xs fill-text-muted"
-            >
-              {dim.label}
-            </text>
-          );
-        })}
-      </svg>
-    </div>
-  );
-}
-
-// Skill Pill Component
-function SkillPill({ 
-  name, 
-  proficiency, 
-  color 
-}: { 
-  name: string; 
-  proficiency: number;
-  color: string;
-}) {
-  return (
-    <div className="skill-pill group">
-      <span className="flex-1 text-text-primary group-hover:text-accent-primary transition-colors">
-        {name}
-      </span>
-      <div className="skill-pill-bar">
-        <motion.div
-          className="skill-pill-fill"
-          style={{ background: color }}
-          initial={{ width: 0 }}
-          whileInView={{ width: `${proficiency}%` }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-        />
+      {/* Footer */}
+      <div className="mt-8 pt-6 border-t border-border-subtle flex items-center justify-between">
+        <span className="font-mono text-xs text-text-muted">
+          Demonstrated through production systems
+        </span>
+        <div className="flex gap-1">
+          {["var(--accent-primary)", "var(--data-cyan)", "var(--accent-code)", "var(--accent-tertiary)"].map((color, i) => (
+            <div key={i} className="w-2 h-2" style={{ backgroundColor: color }} />
+          ))}
+        </div>
       </div>
-      <span className="font-mono text-xs text-text-muted w-8 text-right">
-        {proficiency}
-      </span>
-    </div>
+    </section>
   );
 }

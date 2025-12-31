@@ -105,7 +105,7 @@ export function Hero() {
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 bg-success" />
                   <span className="font-mono text-sm text-text-primary">
-                    Available for Work
+                    Open to collaborations.
                   </span>
                 </div>
               </div>

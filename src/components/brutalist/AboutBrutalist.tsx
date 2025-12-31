@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { portfolioData } from "@/data";
-import { useIsMobile } from "@/lib/hooks";
+import { useIsMobile, useHasMounted } from "@/lib/hooks";
 
 // Focus area data with project counts
 const focusAreas = [
@@ -32,6 +32,8 @@ const focusAreas = [
 export function AboutBrutalist() {
   const { summary, about, education } = portfolioData;
   const isMobile = useIsMobile();
+  const hasMounted = useHasMounted();
+  const shouldAnimate = hasMounted && !isMobile;
 
   return (
     <section 
@@ -58,9 +60,9 @@ export function AboutBrutalist() {
         <div className="lg:col-span-8 space-y-8">
           {/* Pull Quote */}
           <motion.blockquote
-            initial={{ opacity: isMobile ? 1 : 0, x: isMobile ? 0 : -20 }}
+            initial={shouldAnimate ? { opacity: 0, x: -20 } : false}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.5 }}
             className="pull-quote"
           >
@@ -69,10 +71,10 @@ export function AboutBrutalist() {
 
           {/* Overview */}
           <motion.div
-            initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 20 }}
+            initial={shouldAnimate ? { opacity: 0, y: 20 } : false}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.4, delay: shouldAnimate ? 0.1 : 0 }}
           >
             <p className="text-text-secondary leading-relaxed">
               {summary.short}
@@ -81,10 +83,10 @@ export function AboutBrutalist() {
 
           {/* Focus Areas */}
           <motion.div
-            initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 20 }}
+            initial={shouldAnimate ? { opacity: 0, y: 20 } : false}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.2 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.4, delay: shouldAnimate ? 0.2 : 0 }}
           >
             <h3 className="font-display text-lg text-text-primary uppercase mb-6">
               Core Competencies
@@ -94,8 +96,8 @@ export function AboutBrutalist() {
                 <FocusCard
                   key={area.number}
                   {...area}
-                  delay={isMobile ? 0 : index * 0.1}
-                  isMobile={isMobile}
+                  delay={shouldAnimate ? index * 0.1 : 0}
+                  shouldAnimate={shouldAnimate}
                 />
               ))}
             </div>
@@ -103,10 +105,10 @@ export function AboutBrutalist() {
 
           {/* Methodology */}
           <motion.div
-            initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 20 }}
+            initial={shouldAnimate ? { opacity: 0, y: 20 } : false}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.3 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.4, delay: shouldAnimate ? 0.3 : 0 }}
             className="card p-6"
           >
             <h3 className="font-display text-lg text-text-primary uppercase mb-4">
@@ -131,10 +133,10 @@ export function AboutBrutalist() {
         <div className="lg:col-span-4 space-y-6">
           {/* Education Card */}
           <motion.div
-            initial={{ opacity: isMobile ? 1 : 0, x: isMobile ? 0 : 20 }}
+            initial={shouldAnimate ? { opacity: 0, x: 20 } : false}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.2 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.4, delay: shouldAnimate ? 0.2 : 0 }}
             className="card-elevated p-6"
           >
             <h3 className="font-display text-sm text-text-primary uppercase mb-4 flex items-center gap-2">
@@ -169,10 +171,10 @@ export function AboutBrutalist() {
 
           {/* Quick Facts Card */}
           <motion.div
-            initial={{ opacity: isMobile ? 1 : 0, x: isMobile ? 0 : 20 }}
+            initial={shouldAnimate ? { opacity: 0, x: 20 } : false}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.3 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.4, delay: shouldAnimate ? 0.3 : 0 }}
             className="card p-6"
           >
             <h3 className="font-display text-sm text-text-primary uppercase mb-4 flex items-center gap-2">
@@ -202,10 +204,10 @@ export function AboutBrutalist() {
 
           {/* Interests Card */}
           <motion.div
-            initial={{ opacity: isMobile ? 1 : 0, x: isMobile ? 0 : 20 }}
+            initial={shouldAnimate ? { opacity: 0, x: 20 } : false}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.4 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.4, delay: shouldAnimate ? 0.4 : 0 }}
             className="card p-6"
           >
             <h3 className="font-display text-sm text-text-primary uppercase mb-4 flex items-center gap-2">
@@ -234,7 +236,7 @@ function FocusCard({
   projectsCount,
   color,
   delay,
-  isMobile
+  shouldAnimate
 }: { 
   number: string;
   title: string;
@@ -242,13 +244,13 @@ function FocusCard({
   projectsCount: number;
   color: string;
   delay: number;
-  isMobile: boolean;
+  shouldAnimate: boolean;
 }) {
   return (
     <motion.div
-      initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 20 }}
+      initial={shouldAnimate ? { opacity: 0, y: 20 } : false}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.4, delay }}
       className="card group hover:border-accent-primary transition-colors p-4 min-h-45 flex flex-col"
       style={{ borderLeftColor: color, borderLeftWidth: '3px' }}

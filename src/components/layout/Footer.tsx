@@ -80,7 +80,7 @@ export function Footer() {
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 bg-green-500" />
                   <span className="font-mono text-sm text-text-muted">
-                    Available
+                    Open to collaborations.
                   </span>
                 </div>
                 <p className="font-mono text-sm text-text-muted">

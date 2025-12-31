@@ -50,16 +50,43 @@ export function HeroBrutalist() {
         initial="initial"
         animate="animate"
       >
-        {/* Status Badge */}
+        {/* Animated Status Indicator */}
         <motion.div
           variants={fadeIn}
           transition={{ duration: 0.4 }}
-          className="flex items-center gap-3 mb-8"
+          className="flex items-center gap-4 mb-8"
         >
-          <div className="status-dot active" aria-hidden="true" />
-          <span className="font-mono text-xs text-accent-primary uppercase tracking-[0.15em]">
-            PORTFOLIO V2.0 // ONLINE
-          </span>
+          {/* Pulsing ring indicator */}
+          <div className="relative flex items-center justify-center">
+            <motion.span
+              className="absolute w-3 h-3 rounded-full bg-accent-primary/30"
+              animate={{ scale: [1, 1.8, 1], opacity: [0.5, 0, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
+            />
+            <span className="w-2 h-2 rounded-full bg-accent-primary" />
+          </div>
+          
+          {/* Typing effect text */}
+          <div className="flex items-center gap-2 font-mono text-xs text-text-muted">
+            <span className="text-accent-primary">$</span>
+            <motion.span
+              initial={{ width: 0 }}
+              animate={{ width: "auto" }}
+              transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+              className="overflow-hidden whitespace-nowrap"
+            >
+              <span className="text-text-secondary">status</span>
+              <span className="text-text-muted mx-1">→</span>
+              <span className="text-accent-primary">ready</span>
+            </motion.span>
+            <motion.span
+              animate={{ opacity: [1, 0] }}
+              transition={{ duration: 0.6, repeat: Infinity, repeatType: "reverse" }}
+              className="text-accent-primary"
+            >
+              _
+            </motion.span>
+          </div>
         </motion.div>
 
         {/* Two Column Layout */}

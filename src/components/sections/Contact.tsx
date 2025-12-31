@@ -122,7 +122,7 @@ export function Contact() {
                 <div className="flex items-center gap-3">
                   <span className="w-2 h-2 bg-green-500" />
                   <span className="font-mono text-sm text-text-primary">
-                    Available for work
+                    Open to collaborations.
                   </span>
                 </div>
               </div>

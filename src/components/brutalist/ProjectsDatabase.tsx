@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef } from "react";
 import Link from "next/link";
 import { portfolioData } from "@/data";
-import { useIsMobile } from "@/lib/hooks";
+import { useIsMobile, useHasMounted } from "@/lib/hooks";
 
 // Project metrics mapping
 const projectMetrics: Record<string, { value: string; label: string; color: string }> = {
@@ -13,11 +13,20 @@ const projectMetrics: Record<string, { value: string; label: string; color: stri
   "kiitrail": { value: "94.39%", label: "R² Score", color: "var(--data-cyan)" },
 };
 
-// Mini visualization data
-const projectVizData: Record<string, number[]> = {
-  "dns-threat-detection": [96.8, 97.2, 99.68], // F1 scores: BiLSTM, LightGBM, Ensemble
-  "counterfactual-scout": [0.75, 0.81, 0.088], // AUC evolution
-  "kiitrail": [85, 90, 94.39], // R² improvement
+// Architecture flow for system design visualization
+const projectArchitecture: Record<string, { stages: string[]; flow: string }> = {
+  "dns-threat-detection": {
+    stages: ["DNS Logs", "Feature Eng.", "BiLSTM + LGB", "Ensemble", "Threat Score"],
+    flow: "ingestion → processing → inference → output"
+  },
+  "kiitrail": {
+    stages: ["Train Data", "Feature Pipeline", "XGBoost", "FastAPI", "Streamlit"],
+    flow: "data → transform → model → serve → display"
+  },
+  "counterfactual-scout": {
+    stages: ["StatsBomb", "Pass Events", "xT Model", "Counterfactual", "Analysis"],
+    flow: "source → extract → model → compare → insight"
+  },
 };
 
 export function ProjectsDatabase() {
@@ -29,6 +38,8 @@ export function ProjectsDatabase() {
   );
   const containerRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
+  const hasMounted = useHasMounted();
+  const shouldAnimate = hasMounted && !isMobile;
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (isTouchDevice) return;
@@ -68,7 +79,7 @@ export function ProjectsDatabase() {
             project={project}
             index={index}
             isFeatured={index === 0}
-            isMobile={isMobile}
+            shouldAnimate={shouldAnimate}
             onHover={() => setHoveredProject(project.id)}
             onLeave={() => setHoveredProject(null)}
           />
@@ -76,7 +87,7 @@ export function ProjectsDatabase() {
       </div>
 
       {/* Cursor Preview (Desktop Only) */}
-      {!isTouchDevice && !isMobile && (
+      {!isTouchDevice && shouldAnimate && (
         <AnimatePresence>
           {hoveredProject && (
             <CursorPreview
@@ -124,28 +135,28 @@ function ProjectCard({
   project, 
   index, 
   isFeatured,
-  isMobile,
+  shouldAnimate,
   onHover,
   onLeave
 }: { 
   project: typeof portfolioData.projects[0];
   index: number;
   isFeatured: boolean;
-  isMobile: boolean;
+  shouldAnimate: boolean;
   onHover: () => void;
   onLeave: () => void;
 }) {
   const metric = projectMetrics[project.id];
-  const vizData = projectVizData[project.id] || [70, 80, 90];
+  const architecture = projectArchitecture[project.id];
 
   return (
     <Link href={`/projects/${project.id}`}>
       <motion.article
         className={`card-interactive group h-full ${isFeatured ? 'lg:col-span-2' : ''}`}
-        initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 20 }}
+        initial={shouldAnimate ? { opacity: 0, y: 20 } : false}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.4, delay: isMobile ? 0 : index * 0.1 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.4, delay: shouldAnimate ? index * 0.1 : 0 }}
         onMouseEnter={onHover}
         onMouseLeave={onLeave}
       >
@@ -160,47 +171,51 @@ function ProjectCard({
             </span>
           </div>
           
-          {/* Mini Bar Chart */}
-          <MiniBarChart data={vizData} color={metric?.color || "var(--accent-primary)"} />
-        </div>
-
-        {/* Content */}
-        <div className="mb-6">
-          <h3 className="font-display text-xl md:text-2xl text-text-primary mb-3 group-hover:text-accent-primary transition-colors">
-            {project.title}
-          </h3>
-          <p className="text-sm text-text-secondary leading-relaxed line-clamp-2 md:line-clamp-3">
-            {project.one_liner}
-          </p>
-        </div>
-
-        {/* Metric Badge */}
-        {metric && (
-          <div className="mb-6">
+          {/* Metric Badge - moved to header */}
+          {metric && (
             <div 
               className="metric-badge inline-flex"
               style={{ borderColor: metric.color }}
             >
               <span 
-                className="metric-badge-value"
+                className="metric-badge-value text-sm"
                 style={{ color: metric.color }}
               >
                 {metric.value}
               </span>
-              <span className="metric-badge-label">{metric.label}</span>
             </div>
+          )}
+        </div>
+
+        {/* Content */}
+        <div className="mb-4">
+          <h3 className="font-display text-xl md:text-2xl text-text-primary mb-3 group-hover:text-accent-primary transition-colors">
+            {project.title}
+          </h3>
+          <p className="text-sm text-text-secondary leading-relaxed line-clamp-2">
+            {project.one_liner}
+          </p>
+        </div>
+
+        {/* Architecture Flow Diagram */}
+        {architecture && (
+          <div className="mb-4 p-3 bg-bg-elevated border border-border-subtle">
+            <span className="font-mono text-xs text-text-muted block mb-2">
+              System Flow
+            </span>
+            <ArchitectureFlow stages={architecture.stages} color={metric?.color || "var(--accent-primary)"} />
           </div>
         )}
 
         {/* Tech Stack */}
-        <div className="flex flex-wrap gap-2 mb-6">
-          {project.tech_stack.slice(0, 5).map((tech) => (
+        <div className="flex flex-wrap gap-2 mb-4">
+          {project.tech_stack.slice(0, 4).map((tech) => (
             <span key={tech} className="tech-badge">
               {tech}
             </span>
           ))}
-          {project.tech_stack.length > 5 && (
-            <span className="tech-badge">+{project.tech_stack.length - 5}</span>
+          {project.tech_stack.length > 4 && (
+            <span className="tech-badge">+{project.tech_stack.length - 4}</span>
           )}
         </div>
 
@@ -218,22 +233,40 @@ function ProjectCard({
   );
 }
 
-// Mini Bar Chart Component
-function MiniBarChart({ data, color }: { data: number[]; color: string }) {
-  const maxValue = Math.max(...data);
-  
+// Architecture Flow Component - SVG-based pipeline visualization
+function ArchitectureFlow({ stages, color }: { stages: string[]; color: string }) {
   return (
-    <div className="mini-bar-chart" aria-hidden="true">
-      {data.map((value, i) => (
-        <div
-          key={i}
-          className="mini-bar"
-          style={{ 
-            height: `${(value / maxValue) * 100}%`,
-            background: i === data.length - 1 ? color : 'var(--border-default)',
-            opacity: i === data.length - 1 ? 1 : 0.5,
-          }}
-        />
+    <div className="flex items-center gap-1 overflow-x-auto pb-1">
+      {stages.map((stage, i) => (
+        <div key={i} className="flex items-center shrink-0">
+          {/* Stage Box */}
+          <div 
+            className="px-2 py-1 border text-center min-w-15"
+            style={{ 
+              borderColor: i === stages.length - 1 ? color : 'var(--border-subtle)',
+              backgroundColor: i === stages.length - 1 ? `${color}10` : 'transparent'
+            }}
+          >
+            <span 
+              className="font-mono text-xs whitespace-nowrap"
+              style={{ color: i === stages.length - 1 ? color : 'var(--text-muted)' }}
+            >
+              {stage}
+            </span>
+          </div>
+          
+          {/* Arrow */}
+          {i < stages.length - 1 && (
+            <svg width="16" height="12" viewBox="0 0 16 12" className="shrink-0 mx-0.5">
+              <path 
+                d="M0 6h12M10 2l4 4-4 4" 
+                stroke="var(--border-default)" 
+                strokeWidth="1.5" 
+                fill="none"
+              />
+            </svg>
+          )}
+        </div>
       ))}
     </div>
   );
