@@ -1,14 +1,6 @@
 # Subrat Dash — Portfolio
 
-A production-ready Next.js portfolio showcasing ML systems engineering work, built with a focus on performance, accessibility, and technical craftsmanship.
 
-## 🎯 Design Philosophy
-
-- **Dark mode only**: Single coherent aesthetic without theme toggle complexity
-- **Evidence-based presentation**: Skills shown through usage context, not arbitrary ratings
-- **Hybrid architecture**: Single-page landing with deep-dive project pages
-- **Performance-first**: Optimized bundles, static generation, minimal runtime overhead
-- **Accessible by default**: Semantic HTML, ARIA labels, keyboard navigation
 
 ## 🛠 Tech Stack
 
@@ -16,31 +8,8 @@ A production-ready Next.js portfolio showcasing ML systems engineering work, bui
 - **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) (CSS custom properties)
 - **Animation**: [Framer Motion 12](https://www.framer.com/motion/)
 - **Language**: TypeScript 5
-- **Fonts**: [Geist Sans &amp; Mono](https://vercel.com/font)
 
-## 📐 Design System
 
-### Color Palette
-
-```css
---background:         #0A0A0B   /* Page background */
---surface:            #141415   /* Cards, elevated elements */
---surface-elevated:   #1C1C1E   /* Hover states */
---border:             #2A2A2D   /* Subtle dividers */
---text-primary:       #FAFAFA   /* Headings */
---text-secondary:     #A1A1A6   /* Body text */
---text-muted:         #6B6B70   /* Captions */
---accent:             #6B8AFF   /* Links, highlights */
---accent-hover:       #8BA3FF   /* Hover state */
-```
-
-### Typography Scale
-
-- **Base font size:** 16px (1rem)
-- **Line heights:** Tight (1.2) for headings, Relaxed (1.625) for body
-- **Spacing system:** 4px base (4, 8, 12, 16, 24, 32, 48, 64, 96, 128)
-- **Max content width:** 72rem (1152px)
-- **Optimal prose width:** 42rem (672px)
 
 ## 🚀 Getting Started
 
@@ -109,54 +78,8 @@ portfolio-site/
 └── tsconfig.json               # TypeScript configuration
 ```
 
-## 🎨 Design System
 
-### Color Palette
 
-```css
-/* Dark mode foundation */
---background: #0A0A0B      /* Near-black base */
---surface: #141415         /* Elevated surfaces */
---surface-elevated: #1C1C1E
-
-/* Accent */
---accent: #6B8AFF          /* Muted periwinkle blue */
---accent-hover: #8BA3FF
---accent-muted: rgba(107, 138, 255, 0.15)
-
-/* Text */
---text-primary: #FAFAFA    /* High contrast */
---text-secondary: #A1A1A6  /* Standard content */
---text-muted: #6B6B70      /* De-emphasized */
-```
-
-### Typography
-
-- **Base**: 16px (1rem), 4px spacing grid
-- **Scale**: xs (12px) → 6xl (60px) with responsive breakpoints
-- **Fonts**: Geist Sans (body), Geist Mono (code)
-- **Weights**: 400 (regular), 500 (medium), 600 (semibold)
-
-### Spacing
-
-Consistent 4px base unit: `gap-4` (16px), `py-6` (24px), `mb-12` (48px)
-
-## 📊 Data Management
-
-All content lives in [`src/data/portfolio.ts`](src/data/portfolio.ts):
-
-```typescript
-export const portfolioData = {
-  identity: { /* name, roles, contact */ },
-  summary: { /* headline, philosophy, focus areas */ },
-  education: { /* degrees, timeline */ },
-  skills: { /* languages, frameworks, systems */ },
-  projects: [ /* project details with metadata */ ],
-  training: [ /* certifications */ ],
-};
-```
-
-**To update content**: Edit this single file. No component changes needed.
 
 ## 🔀 Routing
 
