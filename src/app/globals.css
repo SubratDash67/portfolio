@@ -248,6 +248,22 @@ p {
   font-size: var(--text-base);
   line-height: var(--leading-relaxed);
   max-width: var(--content-max);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Better text wrapping for all text elements */
+h1, h2, h3, h4, h5, h6, p, span, div {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Prevent orphaned single characters */
+.hyphens-auto {
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
 }
 
 /* Technical/Code text */
@@ -1188,4 +1204,42 @@ a:hover {
     padding: var(--space-4) var(--space-5);
     font-size: var(--text-base);
   }
+}
+
+/* ===========================================
+   CUSTOM SCROLLBAR STYLES
+   =========================================== */
+
+/* Scrollbar for architecture flow */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-primary) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}
+
+/* Smooth scroll snap for architecture flow */
+.scroll-snap-x {
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-snap-x > * {
+  scroll-snap-align: start;
 }

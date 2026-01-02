@@ -28,13 +28,13 @@ export function Footer() {
               </h3>
               <nav className="space-y-3" aria-label="Footer navigation">
                 {mainNavItems.map((item) => (
-                  <a
+                  <Link
                     key={item.href}
-                    href={item.href}
+                    href={item.href.startsWith('#') ? `/${item.href}` : item.href}
                     className="block font-mono text-sm text-text-muted hover:text-text-primary transition-colors"
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 ))}
               </nav>
             </motion.div>

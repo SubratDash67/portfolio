@@ -42,13 +42,13 @@ export function Header() {
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
               {mainNavItems.map((item) => (
-                <a
+                <Link
                   key={item.href}
-                  href={item.href}
+                  href={item.href.startsWith('#') ? `/${item.href}` : item.href}
                   className="nav-link"
                 >
                   {item.label}
-                </a>
+                </Link>
               ))}
               
               {/* Separator */}
@@ -94,14 +94,14 @@ export function Header() {
           >
             <nav className="px-6 py-6 space-y-4">
               {mainNavItems.map((item) => (
-                <a
+                <Link
                   key={item.href}
-                  href={item.href}
+                  href={item.href.startsWith('#') ? `/${item.href}` : item.href}
                   onClick={() => setMobileMenuOpen(false)}
                   className="block font-mono text-sm uppercase tracking-wider text-text-secondary hover:text-text-primary py-2 border-b border-border"
                 >
                   {item.label}
-                </a>
+                </Link>
               ))}
               
               <div className="pt-4 flex gap-6">

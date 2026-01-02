@@ -16,7 +16,7 @@ export default function Home() {
       <GridLayout>
         <HeroBrutalist />
         <MarqueeBanner />
-        <ProjectsDatabase />
+        <ProjectsDatabase showFeaturedOnly={true} />
         <TerminalSkills />
         <AboutBrutalist />
         <ContactBrutalist />

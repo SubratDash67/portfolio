@@ -9,8 +9,11 @@ import { useIsMobile, useHasMounted } from "@/lib/hooks";
 // Project metrics mapping
 const projectMetrics: Record<string, { value: string; label: string; color: string }> = {
   "dns-threat-detection": { value: "99.68%", label: "F1 Score", color: "var(--accent-primary)" },
-  "counterfactual-scout": { value: "0.81", label: "AUC Score", color: "var(--data-purple)" },
-  "kiitrail": { value: "94.39%", label: "R² Score", color: "var(--data-cyan)" },
+  "counterfactual-scout": { value: "0.81", label: "AUC", color: "var(--data-purple)" },
+  "kiitrail": { value: "94.39%", label: "R²", color: "var(--data-cyan)" },
+  "monsoon-crop-predictor": { value: "PyPI", label: "Package", color: "var(--accent-tertiary)" },
+  "ipl-analytics": { value: "17", label: "Seasons", color: "var(--accent-secondary)" },
+  "collaborative-markdown-editor": { value: "Y.js", label: "CRDT", color: "var(--accent-code)" },
 };
 
 // Architecture flow for system design visualization
@@ -20,17 +23,33 @@ const projectArchitecture: Record<string, { stages: string[]; flow: string }> = 
     flow: "ingestion → processing → inference → output"
   },
   "kiitrail": {
-    stages: ["Train Data", "Feature Pipeline", "XGBoost", "FastAPI", "Streamlit"],
+    stages: ["Train Data", "Feature Pipeline", "LightGBM", "FastAPI", "Predictions"],
     flow: "data → transform → model → serve → display"
   },
   "counterfactual-scout": {
     stages: ["StatsBomb", "Pass Events", "xT Model", "Counterfactual", "Analysis"],
     flow: "source → extract → model → compare → insight"
   },
+  "monsoon-crop-predictor": {
+    stages: ["ICRISAT Data", "Rainfall Features", "XGB + LGB", "Uncertainty", "Forecast"],
+    flow: "data → engineer → ensemble → quantify → output"
+  },
+  "ipl-analytics": {
+    stages: ["Match Data", "Aggregation", "Analytics API", "React UI", "Insights"],
+    flow: "source → process → serve → visualize → analyze"
+  },
+  "collaborative-markdown-editor": {
+    stages: ["Y.js CRDT", "WebSocket", "Postgres", "Auth", "Real-time Sync"],
+    flow: "edit → sync → persist → verify → collaborate"
+  },
 };
 
-export function ProjectsDatabase() {
+export function ProjectsDatabase({ showFeaturedOnly = false }: { showFeaturedOnly?: boolean }) {
   const { projects } = portfolioData;
+  const filteredProjects = showFeaturedOnly 
+    ? projects.filter(p => p.featured) 
+    : projects;
+  
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isTouchDevice] = useState(() => 
@@ -63,7 +82,7 @@ export function ProjectsDatabase() {
           </h2>
         </div>
         <span className="section-header-meta">
-          {projects.length} CASE STUDIES
+          {filteredProjects.length} {showFeaturedOnly ? 'FEATURED' : 'TOTAL'} PROJECT{filteredProjects.length !== 1 ? 'S' : ''}
         </span>
       </div>
 
@@ -73,7 +92,7 @@ export function ProjectsDatabase() {
         onMouseMove={handleMouseMove}
         className="grid grid-cols-1 lg:grid-cols-2 gap-6"
       >
-        {projects.map((project, index) => (
+        {filteredProjects.map((project, index) => (
           <ProjectCard
             key={project.id}
             project={project}
@@ -102,8 +121,19 @@ export function ProjectsDatabase() {
       <div className="mt-8 pt-6 border-t border-border-subtle">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <p className="font-mono text-xs text-text-muted">
-            Click any project for detailed case study
+            {showFeaturedOnly ? 'Showing featured projects' : 'All projects and case studies'}
           </p>
+          
+          {/* View All Projects Button (only on featured view) */}
+          {showFeaturedOnly && (
+            <Link 
+              href="/projects"
+              className="btn-secondary inline-flex items-center gap-2"
+            >
+              View All Projects
+              <span aria-hidden="true">→</span>
+            </Link>
+          )}
           
           {/* Decorative dots pattern */}
           <div className="flex items-center gap-4">
@@ -189,21 +219,38 @@ function ProjectCard({
 
         {/* Content */}
         <div className="mb-4">
-          <h3 className="font-display text-xl md:text-2xl text-text-primary mb-3 group-hover:text-accent-primary transition-colors">
+          <h3 
+            className="font-display text-xl md:text-2xl text-text-primary mb-3 group-hover:text-accent-primary transition-colors leading-tight"
+            style={{
+              wordBreak: 'break-word',
+              overflowWrap: 'anywhere',
+              hyphens: 'auto',
+              WebkitHyphens: 'auto',
+              msHyphens: 'auto'
+            }}
+          >
             {project.title}
           </h3>
-          <p className="text-sm text-text-secondary leading-relaxed line-clamp-2">
+          <p 
+            className="text-sm text-text-secondary leading-relaxed line-clamp-2"
+            style={{
+              wordBreak: 'break-word',
+              overflowWrap: 'break-word'
+            }}
+          >
             {project.one_liner}
           </p>
         </div>
 
         {/* Architecture Flow Diagram */}
         {architecture && (
-          <div className="mb-4 p-3 bg-bg-elevated border border-border-subtle">
-            <span className="font-mono text-xs text-text-muted block mb-2">
+          <div className="mb-4 p-4 bg-bg-elevated border border-border-subtle overflow-hidden">
+            <span className="font-mono text-xs text-text-muted block mb-3">
               System Flow
             </span>
-            <ArchitectureFlow stages={architecture.stages} color={metric?.color || "var(--accent-primary)"} />
+            <div className="-mx-1">
+              <ArchitectureFlow stages={architecture.stages} color={metric?.color || "var(--accent-primary)"} />
+            </div>
           </div>
         )}
 
@@ -233,41 +280,132 @@ function ProjectCard({
   );
 }
 
-// Architecture Flow Component - SVG-based pipeline visualization
+// Architecture Flow Component - Enhanced with animations
 function ArchitectureFlow({ stages, color }: { stages: string[]; color: string }) {
   return (
-    <div className="flex items-center gap-1 overflow-x-auto pb-1">
-      {stages.map((stage, i) => (
-        <div key={i} className="flex items-center shrink-0">
-          {/* Stage Box */}
-          <div 
-            className="px-2 py-1 border text-center min-w-15"
-            style={{ 
-              borderColor: i === stages.length - 1 ? color : 'var(--border-subtle)',
-              backgroundColor: i === stages.length - 1 ? `${color}10` : 'transparent'
-            }}
+    <div className="relative w-full">
+      {/* Flow diagram */}
+      <div className="flex items-center gap-1.5 overflow-x-auto pb-3 scrollbar-thin" style={{ scrollbarWidth: 'thin', scrollbarColor: `${color} transparent` }}>
+        {stages.map((stage, i) => (
+          <motion.div 
+            key={i} 
+            className="flex items-center shrink-0"
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3, delay: i * 0.1 }}
           >
-            <span 
-              className="font-mono text-xs whitespace-nowrap"
-              style={{ color: i === stages.length - 1 ? color : 'var(--text-muted)' }}
+            {/* Stage Box */}
+            <motion.div 
+              className="relative px-2.5 py-2 border-2 text-center group/stage"
+              style={{ 
+                borderColor: i === stages.length - 1 ? color : 'var(--border-default)',
+                backgroundColor: i === stages.length - 1 ? `${color}15` : 'var(--bg-elevated)',
+                minWidth: '70px',
+                maxWidth: '100px'
+              }}
+              whileHover={{ scale: 1.03, borderColor: color }}
+              transition={{ duration: 0.2 }}
             >
-              {stage}
-            </span>
-          </div>
-          
-          {/* Arrow */}
-          {i < stages.length - 1 && (
-            <svg width="16" height="12" viewBox="0 0 16 12" className="shrink-0 mx-0.5">
-              <path 
-                d="M0 6h12M10 2l4 4-4 4" 
-                stroke="var(--border-default)" 
-                strokeWidth="1.5" 
-                fill="none"
-              />
-            </svg>
-          )}
+              {/* Stage number indicator */}
+              <span 
+                className="absolute -top-2 -left-2 w-5 h-5 flex items-center justify-center rounded-full border text-[10px] font-mono bg-bg"
+                style={{ 
+                  borderColor: color,
+                  color: i === stages.length - 1 ? color : 'var(--text-muted)'
+                }}
+              >
+                {i + 1}
+              </span>
+              
+              <span 
+                className="font-mono text-[10px] font-medium leading-tight block"
+                style={{ 
+                  color: i === stages.length - 1 ? color : 'var(--text-secondary)',
+                  wordBreak: 'break-word',
+                  overflowWrap: 'break-word',
+                  hyphens: 'auto'
+                }}
+              >
+                {stage}
+              </span>
+            </motion.div>
+            
+            {/* Animated Arrow */}
+            {i < stages.length - 1 && (
+              <div className="relative mx-1">
+                <svg width="20" height="14" viewBox="0 0 20 14" className="shrink-0">
+                  {/* Arrow line */}
+                  <motion.path 
+                    d="M0 7h15" 
+                    stroke="var(--border-default)" 
+                    strokeWidth="2" 
+                    fill="none"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 0.5, delay: i * 0.1 + 0.2 }}
+                  />
+                  {/* Arrow head */}
+                  <motion.path 
+                    d="M13 3l4 4-4 4" 
+                    stroke="var(--border-default)" 
+                    strokeWidth="2" 
+                    fill="none"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3, delay: i * 0.1 + 0.4 }}
+                  />
+                  {/* Animated dot traveling along arrow */}
+                  <motion.circle
+                    cx="0"
+                    cy="7"
+                    r="2"
+                    fill={color}
+                    initial={{ cx: 0 }}
+                    animate={{ cx: [0, 15, 15] }}
+                    transition={{ 
+                      duration: 1.5, 
+                      delay: i * 0.15,
+                      repeat: Infinity,
+                      repeatDelay: 2
+                    }}
+                  />
+                </svg>
+              </div>
+            )}
+          </motion.div>
+        ))}
+      </div>
+      
+      {/* Processing indicator */}
+      <motion.div 
+        className="mt-2 flex items-center gap-2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+      >
+        <div className="flex gap-1">
+          {[0, 1, 2].map((i) => (
+            <motion.div
+              key={i}
+              className="w-1 h-1 rounded-full"
+              style={{ backgroundColor: color }}
+              animate={{ 
+                opacity: [0.3, 1, 0.3],
+                scale: [1, 1.2, 1]
+              }}
+              transition={{
+                duration: 1.5,
+                delay: i * 0.2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
         </div>
-      ))}
+        <span className="font-mono text-[10px] text-text-muted uppercase tracking-wider">
+          Data Flow Pipeline
+        </span>
+      </motion.div>
     </div>
   );
 }

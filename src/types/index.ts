@@ -79,6 +79,7 @@ export interface Project {
   title: string;
   type: string;
   timeline: string;
+  featured?: boolean; // Show on homepage
   one_liner: string;
   problem_statement: string;
   technical_approach: string[];

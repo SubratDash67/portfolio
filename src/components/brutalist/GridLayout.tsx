@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
+import Link from "next/link";
 
 interface GridLayoutProps {
   children: React.ReactNode;
@@ -85,9 +86,9 @@ function SidebarNav() {
       </div>
       
       {navItems.map((item) => (
-        <a
+        <Link
           key={item.id}
-          href={`#${item.id}`}
+          href={`/#${item.id}`}
           className={`vertical-text font-mono text-xs tracking-[0.15em] uppercase transition-colors py-3 flex items-center gap-2 ${
             activeSection === item.id
               ? "text-accent-primary"
@@ -96,7 +97,7 @@ function SidebarNav() {
           aria-current={activeSection === item.id ? "page" : undefined}
         >
           {item.label}
-        </a>
+        </Link>
       ))}
       
       {/* Decorative Elements */}
@@ -147,14 +148,14 @@ export function MobileNav() {
   return (
     <nav className="mobile-nav lg:hidden" aria-label="Mobile navigation">
       {navItems.map((item) => (
-        <a
+        <Link
           key={item.id}
-          href={`#${item.id}`}
+          href={`/#${item.id}`}
           className={`mobile-nav-item ${activeSection === item.id ? "active" : ""}`}
           aria-current={activeSection === item.id ? "page" : undefined}
         >
           {item.label}
-        </a>
+        </Link>
       ))}
     </nav>
   );

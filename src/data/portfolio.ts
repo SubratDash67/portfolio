@@ -133,6 +133,7 @@ export const portfolioData: PortfolioData = {
       title: "Real-time Malicious Domain Detection at Scale",
       type: "Open-source ML Security System · PyPI Package",
       timeline: "2024 – 2025",
+      featured: true,
       one_liner:
         "Hybrid ensemble (BiLSTM + LightGBM) processing 1.5M+ domains with 99.68% F1-score for DGA, typosquatting, and phishing detection.",
       problem_statement:
@@ -154,7 +155,7 @@ export const portfolioData: PortfolioData = {
         "Model retraining pipeline designed for weekly updates as new threat intelligence arrives",
       ],
       links: {
-        repo: "https://github.com/SubratDash67/DNS-Threat-Detection",
+        repo: "https://github.com/SubratDash67/DNS-Security",
         demo: "https://pypi.org/project/dns-threat-detector",
       },
       status: "Completed",
@@ -164,6 +165,7 @@ export const portfolioData: PortfolioData = {
       title: "Probabilistic Decision Quality Framework for Sports Analytics",
       type: "Research-Oriented Analytics · StatsBomb Data",
       timeline: "2025",
+      featured: false,
       one_liner:
         "Counterfactual reasoning engine quantifying Expected Threat (xT) gain per pass—identifies high-risk, high-reward playmakers beyond completion rate metrics (AUC 0.81).",
       problem_statement:
@@ -194,6 +196,7 @@ export const portfolioData: PortfolioData = {
       title: "KiitRail: Predictive Train Delay Platform",
       type: "Full-Stack ML Application · Production Deployed",
       timeline: "2024",
+      featured: true,
       one_liner:
         "End-to-end delay forecasting system for 250+ trains achieving 4.59-minute MAE and 94.39% R²—deployed with real-time recommendations to assist travelers in departure planning.",
       problem_statement:
@@ -216,6 +219,102 @@ export const portfolioData: PortfolioData = {
       ],
       links: {
         demo: "https://kiitrail.vercel.app",
+      },
+      status: "Completed",
+    },
+    {
+      id: "monsoon-crop-predictor",
+      title: "Monsoon Crop Predictor System",
+      type: "ML Package · PyPI Published",
+      timeline: "2024",
+      featured: false,
+      one_liner:
+        "Python package for multi-crop yield forecasting (Rice, Wheat, Maize) using ensemble ML and meteorological data with uncertainty quantification.",
+      problem_statement:
+        "Agricultural planning requires accurate crop yield predictions to optimize resource allocation and mitigate food security risks. Existing systems lack robust uncertainty quantification and fail to integrate temporal meteorological patterns with district-level agricultural data.",
+      technical_approach: [
+        "Engineered full data pipeline with rainfall-based feature extraction, outlier detection, and temporal aggregation of ICRISAT district-level datasets",
+        "Developed ensemble models integrating XGBoost and LightGBM for yield prediction with uncertainty quantification and cross-season validation",
+        "Implemented modular architecture with automated testing and CI/CD pipeline for PyPI distribution",
+      ],
+      tech_stack: ["Python", "XGBoost", "LightGBM", "FastAPI", "Pandas", "NumPy"],
+      evaluation_and_results: [
+        "Multi-crop forecasting with cross-validated performance metrics across rice, wheat, and maize yields",
+        "Uncertainty quantification enables confidence intervals for agricultural planning decisions",
+        "Published as production-ready PyPI package with comprehensive documentation and CLI interface",
+      ],
+      engineering_depth: [
+        "Rainfall-based feature engineering captures monsoon variability and seasonal patterns critical for crop modeling",
+        "Ensemble architecture balances XGBoost's handling of complex interactions with LightGBM's computational efficiency",
+        "FastAPI backend enables real-time inference with batch processing capabilities for large-scale forecasting",
+      ],
+      links: {
+        demo: "https://pypi.org/project/monsoon-crop-predictor",
+        repo: "https://github.com/SubratDash67/Monsoon-Crop-Yield",
+      },
+      status: "Completed",
+    },
+    {
+      id: "ipl-analytics",
+      title: "IPL Analytics – T20 Cricket Analysis Platform",
+      type: "Full-Stack Analytics · Live Demo",
+      timeline: "2024",
+      featured: false,
+      one_liner:
+        "Full-stack web application analyzing 17 seasons of IPL data with 800+ players and 1,000+ matches for strategic insights and performance analytics.",
+      problem_statement:
+        "Cricket analytics tools focus on basic statistics but lack contextual insights like matchup analysis, win probability calculations, and phase-wise performance breakdowns needed for strategic decision-making in T20 cricket.",
+      technical_approach: [
+        "Built Flask backend with 15+ RESTful API endpoints for matchup analysis, win probability calculations, and phase-wise performance metrics",
+        "Developed React.js frontend with Recharts for interactive data visualizations enabling comparative analysis across players and teams",
+        "Implemented efficient database queries and data processing pipelines for real-time analytics on large-scale cricket datasets",
+      ],
+      tech_stack: ["Python", "Flask", "React.js", "Recharts", "PostgreSQL", "Pandas"],
+      evaluation_and_results: [
+        "Comprehensive analysis across 17 IPL seasons with 800+ player profiles and 1,000+ match records",
+        "Real-time win probability engine incorporating match context, player form, and historical matchups",
+        "Interactive visualizations enabling phase-wise (powerplay, middle, death) performance comparisons",
+      ],
+      engineering_depth: [
+        "Matchup analysis engine identifies player-vs-bowler patterns using historical performance data",
+        "Database query optimization handles complex aggregations across seasons without performance degradation",
+        "Frontend state management enables smooth navigation between player, team, and match-level analytics",
+      ],
+      links: {
+        demo: "https://bowlervbatsman.netlify.app/",
+        repo: "https://github.com/SubratDash67/ipl-analytics",
+      },
+      status: "Completed",
+    },
+    {
+      id: "collaborative-markdown-editor",
+      title: "Real-Time Collaborative Markdown Editor",
+      type: "Full-Stack Application · Live Demo",
+      timeline: "2024",
+      featured: false,
+      one_liner:
+        "Collaborative editing platform with real-time synchronization, document management, and version control capabilities using Y.js and WebSocket architecture.",
+      problem_statement:
+        "Traditional document editors lack real-time collaboration features or require proprietary platforms. Developers need open-source, self-hosted solutions with version control, conflict resolution, and user contribution tracking.",
+      technical_approach: [
+        "Built React.js frontend with TailwindCSS featuring real-time collaborative editing using Y.js and WebSocket synchronization",
+        "Developed Express.js backend with PostgreSQL database integration, Supabase authentication, and comprehensive RESTful API design",
+        "Implemented advanced features including auto-save functionality, version history tracking, document sharing, and user contribution analytics",
+      ],
+      tech_stack: ["React.js", "Express.js", "Y.js", "WebSocket", "PostgreSQL", "Supabase", "TailwindCSS"],
+      evaluation_and_results: [
+        "Real-time synchronization with conflict-free replicated data types (CRDTs) via Y.js",
+        "Complete version history system enabling rollback to any previous document state",
+        "User contribution analytics tracking individual edits, additions, and deletions per collaborator",
+      ],
+      engineering_depth: [
+        "Y.js CRDT implementation ensures eventual consistency without central coordination overhead",
+        "WebSocket architecture maintains persistent connections for sub-100ms synchronization latency",
+        "Auto-save debouncing balances data persistence with database write optimization",
+      ],
+      links: {
+        demo: "https://rtmd.netlify.app/",
+        repo: "https://github.com/SubratDash67/RT-markdown-editor",
       },
       status: "Completed",
     },
