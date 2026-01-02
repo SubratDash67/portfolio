@@ -195,7 +195,7 @@ export const portfolioData: PortfolioData = {
       type: "Full-Stack ML Application · Production Deployed",
       timeline: "2024",
       one_liner:
-        "End-to-end delay forecasting system for 250+ trains achieving 4.59-minute MAE and 94.39% R²—deployed with real-time recommendations for 1000+ daily users.",
+        "End-to-end delay forecasting system for 250+ trains achieving 4.59-minute MAE and 94.39% R²—deployed with real-time recommendations to assist travelers in departure planning.",
       problem_statement:
         "Indian Railways passengers face unpredictable delays with no advance warning system. Existing apps show current status but cannot forecast future delays. This project delivers probabilistic delay predictions by fusing 12 months of arrival data with meteorological features, enabling travelers to make informed departure decisions.",
       technical_approach: [
