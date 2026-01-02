@@ -120,7 +120,7 @@ export function Hero() {
                 </p>
                 {identity.location.remote_open && (
                   <p className="font-mono text-xs text-text-muted mt-1">
-                    Open to Remote
+                   
                   </p>
                 )}
               </div>

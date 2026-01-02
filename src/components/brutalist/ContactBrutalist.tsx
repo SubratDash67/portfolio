@@ -71,8 +71,7 @@ export function ContactBrutalist() {
           <span className="text-accent-primary">SOMETHING GREAT</span>
         </h3>
         <p className="mt-6 text-text-secondary max-w-xl text-lg">
-          Open to full-time opportunities, internships, and interesting 
-          collaboration projects in ML engineering and backend systems.
+          Open to collaborate on projects in ML engineering and backend systems.
         </p>
       </motion.div>
 

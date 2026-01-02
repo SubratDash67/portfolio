@@ -134,7 +134,7 @@ export function HeroBrutalist() {
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 bg-accent-tertiary" aria-hidden="true" />
-                <span className="font-mono text-text-muted">Open to Opportunities</span>
+                <span className="font-mono text-text-muted">Open to Collaboration</span>
               </div>
             </motion.div>
 
@@ -169,9 +169,9 @@ export function HeroBrutalist() {
             {/* Featured Metric Card */}
             <FeaturedMetric
               value="99.68%"
-              label="Peak F1 Score"
+              label="F1 Score"
               context="DNS Threat Detection"
-              trend="+12.3%"
+              trend=""
             />
 
             {/* Mini Terminal / Stats */}

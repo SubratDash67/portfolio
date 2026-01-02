@@ -188,7 +188,7 @@ export function AboutBrutalist() {
               />
               <QuickFact 
                 label="Status" 
-                value="Open to Opportunities" 
+                value="Open to Collaboration" 
                 highlight
               />
               <QuickFact 

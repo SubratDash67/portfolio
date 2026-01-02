@@ -50,7 +50,7 @@ export function Contact() {
               Get in Touch
             </h2>
             <p className="font-mono text-sm text-text-secondary max-w-xl leading-relaxed">
-              Open to opportunities in ML systems engineering, backend development, 
+              Open to collaboration in ML systems engineering, backend development, 
               and data-driven product work. Let&apos;s build something together.
             </p>
           </motion.div>
@@ -136,7 +136,7 @@ export function Contact() {
                   {identity.location.city}, {identity.location.country}
                 </p>
                 <p className="font-mono text-xs text-text-muted mt-1">
-                  Open to remote opportunities
+                  
                 </p>
               </div>
 
